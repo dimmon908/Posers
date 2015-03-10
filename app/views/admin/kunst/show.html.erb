@@ -1,0 +1,34 @@
+<ul id="cmenu">
+	<li style="border-bottom: 1px solid #9e9e9e;"><%= link_to 'Types', :action => 'index' -%></li>
+	<% @types.each do |t| %>
+	<li><%= link_to sanitize(t.title), :action => 'show', :id => t.id -%></li>
+	<% end -%>
+</ul>
+<div class="r">
+<h2 style="padding-bottom: 10px;">Type: <%= @type.title -%></h2>
+<% @type.propertycontainers.each do |c| %>
+<div style="border: 1px dashed #999; padding: 5px; margin-bottom: 5px;">
+<h3 style="margin: 0px;"><%=h c.title -%></h3> 
+<%= link_to 'verwijderen', {:action => 'deletecontainer', :id => c.id}, {:confirm => 'Zeker weten?', :method => :delete} %> | <%= link_to 'wijzigen', :action => 'editcontainer', :id => c.id -%>
+<% if !c.kunstproperties.blank? %>
+<ul>
+<% c.kunstproperties.each do |p| %>
+<li id="p<%= p.id.to_s%>"><%=h p.title -%> (<%= link_to 'wijzigen', :action => 'editproperty', :id => p.id -%> / <%= link_to 'Verwijderen', {:action => 'deleteproperty', :id => p.id}, {:confirm => 'Zeker weten?', :method => :delete} %>)</li>
+<% end %>
+</ul>
+<% end %>
+<h4>Nieuwe eigenschap</h3>
+<%= form_for(:property, :url => {:action => 'createproperty', :id => c.id }) do |f| %>
+Title <%= f.text_field :title -%>
+<%= f.submit 'Toevoegen' -%>
+<% end %>
+</div>
+<% end %>
+
+<h4>Nieuwe container</h3>
+<%= form_for(:container, :url => {:action => 'createcontainer', :id => params[:id] }) do |f| %>
+Title <%= f.text_field :title -%>
+<%= f.submit 'Toevoegen' -%>
+<% end %>
+</div>
+<br style="clear: both;" />

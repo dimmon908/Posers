@@ -1,0 +1,53 @@
+<h2>Mijn kunst</h2>
+
+<%= render :partial => 'menu' %>
+
+<h3>Actieve kunstwerken in de database van <%=h @me.voornaam -%> <%=h @me.achternaam -%></h3>
+
+<ul id="sresults">
+  <% @kvs.each do |kv| %>
+  <li>
+    <% if kv.kunstimage %>
+      <a href="<%= url_for werk_url(:name => kv.user.intname, :kunstid => kv.id,  :cp => @cp) %>"><img src="<%= kv.kunstimage.url('square') %>" /></a>
+    <% end %>
+    <div class="info">
+      <h4>
+        <a href="<%= url_for werk_url(:name => kv.user.intname, :kunstid => kv.id, :ssid => @ssid, :cp => @cp) %>">
+          <%=h kv.title[0..17].strip -%>
+          <% if kv.title.size > 17 -%>...<% end -%>
+        </a>
+      </h4>
+      <span class="waarderingen"><%= kv.favcount %> waarderingen</span>
+    </div>
+  </li>
+  <% end %>
+</ul>
+
+<% if @pagecount > 1 %>
+<p class="pagination-search">
+  <% i = 0 %>
+  <% while i < @pagecount do %>
+    <%= link_to (i+1).to_s, :controller => '/profiel/mijnkunst', :page => i %> 
+    <% i = i + 1 %>
+  <% end %>
+<p/>
+<% end %>
+
+<br style="clear: both;" />
+
+<% if !@kvi.blank? -%>
+<h3>Inactieve kunstwerken in de database van <%=h @me.voornaam -%> <%=h @me.achternaam -%></h3>
+<p>Van deze werken ontbreken nog de afbeelding.</p>
+<ul>
+  <% @kvi.each do |k| %>
+  <li>
+    <strong><%=h k.title -%></strong>: 
+    <%= link_to 'Plaats afbeelding', :controller  => 'xpose', :action => 'plaatsafbeelding', :id => k.id%> - 
+    <%= link_to 'wijzig', :controller => 'kunst', :action => 'wijzig', :id => k.id -%> - 
+    <%= link_to 'verwijder', :controller => 'kunst', :action => 'verwijder', :id => k.id -%>
+  </li>
+  <% end %>
+</ul>
+<% end %>
+
+

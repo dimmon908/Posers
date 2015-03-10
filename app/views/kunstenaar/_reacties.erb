@@ -1,0 +1,85 @@
+<div class="main">
+
+  <div class="h"></div>
+  
+  <div class="c">
+
+    <h3>Reacties</h3>
+
+    <% if !@kv.replies.blank? -%>
+
+    <ul id="replies">
+
+      <% @reacties.each do |r| %>
+      <li>
+
+      <div class="msg">
+      <div class="info">
+        <p>
+        <% if !r.user.voornaam.blank? and !r.user.achternaam.blank? -%>
+        <%= link_to sanitize(r.user.voornaam) + " " + sanitize(r.user.achternaam), viewprofile_url(:id => r.user.id)  -%>
+        <% else %>
+        <%= link_to sanitize(r.user.nickname), viewprofile_url(:id => r.user.id)  -%>
+        <% end -%>
+        </p>
+            <% if !r.user.avatar.blank? -%><%= image_tag(r.user.avatar.url) -%> <% end %>
+        </div>
+      <p class="m">
+        <span><%= Time.parse(r.created_at.to_s).strftime('%d %b %Y %H:%M')%></span>	
+      <%= sanitize(r.raw).strip %>
+      </p>
+      </div>
+      <br class="cb">
+      <div class="buttons">
+        <% if r.user.id == @me.id or @me.can('admin') -%>
+          <%= link_to 'wijzig reactie', wijzigreactie_path(r.id) -%>
+        <% end -%>
+
+        <% if @me.can('admin') -%>
+          | <%= link_to 'verwijder reactie', verwijderreactie_path(r.id) -%>
+        <% end -%>
+      </div>
+      </li>
+      <% end %>
+    </ul>
+    <% if @pagecount > 1 -%>
+    <p class="pagination-replies">
+    <% i = 0 -%>
+    <% while i < @pagecount do -%>
+    <% if i == @currentpage %>
+      <%= (i + 1).to_s %>
+    <% else %>
+      <%=link_to (i + 1).to_s, werk_url(:name => @kv.user.intname, :kunstid => @kv.id, :rp => i) -%> 
+    <% end -%>
+    
+    <% i = i + 1 -%>
+    <% end -%>
+    <p/>
+    <% end -%>
+    <% else -%>
+    <% end -%>
+    <% if @logged_in -%>
+      <% if @reply %>
+        <% if @reply.errors.any? %>
+          <ul>
+            <% @reply.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        <% end %>
+      <% end %>
+      <h3>Plaats je commentaar</h3>
+      <%= form_for :reply do |form| -%>
+        <p><%= form.text_area :raw, :rows => 5, :cols => 50, :style => "width: 90%" -%></p>
+        <%= form.submit 'Reageren' -%>
+      <% end -%>
+
+      <% else -%>
+        <p><%= link_to 'Log in', login_url -%> om reacties te plaatsen</p>
+      <% end -%>
+      <% if @logged_in -%>
+      <div id="rapporteermisbruik"><%= link_to 'rapporteer misbruik ', :controller => 'kunst', :action => 'misbruik', :id => @kv.id -%></div>
+    <% end -%>			
+  </div>
+  <div class="s"></div>
+</div>

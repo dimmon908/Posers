@@ -1,0 +1,6 @@
+<li><%= link_to 'Forum', viewforumindex_url %></li>
+<li><%= link_to 'Actieve topics', activetopics_url %></li>
+	<% if @logged_in -%>
+	<li><%= link_to 'Mijn topics', mytopics_url %></li>
+	<li><%= link_to 'Mijn berichten', myforummessages_url %></li>
+	<% end -%>

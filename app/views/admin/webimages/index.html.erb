@@ -1,0 +1,21 @@
+<h2>Afbeeldingen</h2>
+<ul>
+	<% @images.each do |i| -%>
+	<li>Afbeelding 
+	  <% if i.image_file_name.nil? %>
+	    No Image Uploaded
+	  <% else %>
+  	  <%= link_to i.filename || i.image_file_name, i.url -%>
+  	<% end %>: 
+	  <%= link_to 'verwijder', :action => 'delete', :id => i.id -%></li>
+	<% end -%>
+</ul>
+
+<h3>Upload afbeelding</h3>
+<%= form_for(:afbeelding, :html => { :multipart => true }) do |f| -%>
+<p>
+  <label for="image">Bestand</label>
+  <%= f.file_field :image %>
+</p>
+<%= submit_tag 'Uploaden' %>
+<% end -%>

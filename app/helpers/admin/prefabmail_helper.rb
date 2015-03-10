@@ -1,0 +1,2 @@
+module Admin::PrefabmailHelper
+end

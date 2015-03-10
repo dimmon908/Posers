@@ -1,0 +1,19 @@
+<h3>Rechten</h3>
+<ul>
+<% @role.permissions.each do |p| -%>
+  <li id="p<%= p.id.to_s %>"><%= p.name %> (<%= link_to 'delete', :action => 'deletepermission', :id => p.id, :role_id => @role.id -%>)</li>
+<% end  -%>
+</ul>
+<%= form_for :permission do |form| -%>
+<fieldset>
+	<legend>Voeg nieuw recht toe</legend>
+    <%= error_messages_for "permission" %>
+	<div class="form_row">
+		<label for="name">Titel:</label>
+		<%= form.text_field :name, :size => 20, :maxlength => 40 -%>
+	</div>
+    <div class="form_row">
+		<%= submit_tag "Toevoegen", :class => "submit" -%>
+	</div>
+</fieldset>
+<% end -%>

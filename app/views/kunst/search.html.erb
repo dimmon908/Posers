@@ -1,0 +1,95 @@
+
+
+<h2>Uitgebreid zoeken</h2>
+
+
+
+<form method="get" action="<%= url_for searchresults_url -%>">
+<table>
+	<tr>
+		<td>Trefwoorden</td>
+		<td> <input type="text" name="q" style="width: 300px;" value="<%=h @qopdracht -%>"/></td>
+	</tr>
+	</tr>
+	<tr>
+		<td>Prijs </td>
+		<td>
+      <input type="text" name="p1" size="6" value="<%=h @prijs1 -%>" id="p1" onclick="this.value = ''" />
+      <input type="text" name="p2" size="6" value="<%=h @prijs2 -%>" onclick="this.value = ''" />
+    </td>
+	</tr>
+	<tr>
+		<td>Breedte </td>
+		<td>
+      <input type="text" name="fb1" size="6" value="<%=h @formaatb1 -%>" id="fb1" onclick="this.value = ''" /> cm
+      <input type="text" name="fb2" size="6" value="<%=h @formaatb2 -%>" onclick="this.value = ''" /> cm
+    </td>
+	</tr>
+	<tr>
+		<td>Hoogte </td>
+		<td>
+      <input type="text" name="fh1" size="6" value="<%=h @formaath1 -%>" id="fh1" onclick="this.value = ''" /> cm 
+      <input type="text" name="fh2" size="6" value="<%=h @formaath2 -%>" onclick="this.value = ''" /> cm
+    </td>
+	</tr>
+	<tr class="gray">
+    <td class="label">Type werk:</td>
+    <td>
+        <select name="type" id="newbar"  onchange="newselect()">
+          <option selected="selected" value="0">Maak een keuze</option>
+          <optgroup label="2D">
+            <% @type2.each do |t| -%><option value="<%= t.id -%>"><%=h t.title -%></option><% end -%>
+          </optgroup>
+          <optgroup label="3D">
+            <% @type3.each do |t| -%><option value="<%= t.id -%>"><%=h t.title -%></option><% end -%>
+          </optgroup>	
+        </select>
+    </td>
+  </tr>
+  <% @type.each do |t| %>
+	<% t.propertycontainers.each do |c| %>
+	<% if !c.kunstproperties.blank? %>
+	<tr class="sb2 tn<%= t.id -%>">
+	  <td class="label"><%= c.title -%></td>
+	  <td>
+      <select name="properties[c<%= c.id.to_s -%>]" disabled="disabled" class="sl<%= t.id.to_s -%>">
+        <option value="0">Maak een keuze</option>
+        <% c.kunstproperties.each do |p| -%>
+          <option value="<%= p.id -%>"><%= p.title -%></option>
+        <% end -%>
+      </select>
+	  </td>
+	</tr>
+	<% end %>
+	<% end %>
+  <% end %>
+	<tr>
+		<td>Sorteer op</td>
+		<td><select name="sort">
+				<option value="date" selected="selected">Datum, nieuwste eerst</option>
+				<option value="views">Best bekeken</option>
+				<option value="app">Meeste waarderingen</option>
+				<option value="replies">Meest besproken</option>
+			</select>
+			</td>
+	</tr>
+	<% if @logged_in -%>
+	<tr>
+    <td>Zoek in mijn favorieten</td>
+		<td><input type="checkbox" name="favs" value="on" /></td>
+  </tr>
+	<% end %>
+	<tr>
+    <td>Alleen huur</td>
+    <td><%= check_box_tag 'conditions[for_rent]', 1 %> </td>
+  </tr>
+	<tr>
+    <td>Alleen beschikbare werken</td>
+    <td><%= check_box_tag 'conditions[for_sale]', 1 %></td>
+  </tr>
+	<tr>
+    <td> </td>
+		<td><input type="submit" value="Zoeken" /> </td>
+	</tr>
+</table>
+</form>

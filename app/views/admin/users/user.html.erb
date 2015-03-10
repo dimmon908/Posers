@@ -1,0 +1,138 @@
+
+
+<h2>Wijzig <strong><%=h @user.nickname %></strong></h2>
+
+
+<%= form_for :user do |form| -%>
+
+  <fieldset>
+    <legend>Gegevens</legend>
+      <%= error_messages_for "user" %>
+    <div class="form_row">
+      <label for="nickname">Nickname:</label>
+      <%= form.text_field :nickname, :size => 20, :maxlength => 40 -%>
+    </div>
+    <div class="form_row">
+      <label for="nickname">Email:</label>
+      <%= form.text_field :email, :size => 20, :maxlength => 200 -%>
+    </div>
+      <div class="form_row">
+        <label for="nickname">Role:</label>
+        <%= collection_select(:user, :role_id, @roles, :id, :name) %>
+      </div>
+      <div class="form_row">
+        <label for="activated">Activated?</label>
+        <%= form.check_box :activated %>
+      </div>
+  </fieldset>
+
+	<% if !@user.role_id.blank? %>
+  <fieldset>
+
+    <legend>Wijzig profiel</legend>
+    <table id="user-full">
+      <tr class="gray">
+        <td class="label">Voornaam: <% if @user.can('xpose') -%><span class="red">*</span><% end %></td>
+        <td><%= form.text_field :voornaam, :size => 30, :maxlength => 90, :value => @user.voornaam %></td>
+      </tr>
+      <tr class="gray">
+        <td class="label">Tussenvoegsel: <% if @user.can('xpose') -%><span class="red">*</span><% end %></td>
+        <td><%= form.text_field :tussenvoegsel, :size => 30, :maxlength => 90, :value => @user.tussenvoegsel %></td>
+      </tr>
+      <tr class="gray">
+        <td class="label">Achternaam: <% if @user.can('xpose') -%><span class="red">*</span><% end -%></td>
+        <td><%= form.text_field :achternaam, :size => 30, :maxlength => 190, :value => @user.achternaam %></td>
+      </tr>
+      <tr class="gray">
+        <td class="label">Email adres: <span class="red">*</span></td>
+        <td><%= form.text_field :email, :size => 30, :maxlength => 190, :value => @user.email -%></td>
+      </tr>
+
+      <% if @user.can('xpose') -%>
+
+      <tr>
+        <td colspan="2">
+          <h3>Gegevens voor in uw kunstenaars profiel</h3>
+          <p>Velden die je leeg laat worden niet getoond in je publieke profiel.</p>
+        </td>
+      </tr>
+      <tr class="gray">
+        <td class="label">Geboorteplaats:</td>
+        <td><%= form.text_field :profile_geboorteplaats, :size => 30, :maxlength => 190, :value => @user.profile_geboorteplaats -%></td>
+      </tr>
+      <tr class="gray">
+        <td class="label">Geboortedatum of jaar:</td>
+        <td><%= form.text_field :profile_geboortedatum, :size => 30, :value => @user.profile_geboortedatum -%></td>
+      </tr>
+      <tr class="gray">
+        <td class="label">Opleiding(en):</td>
+        <td><%= form.text_field :profile_opleidingen, :size => 30, :value => @user.profile_opleidingen -%><br />Gebruik nieuwregels om punten in je opleiding(en) te scheiden.</td>
+      </tr>
+      <tr class="gray">
+        <td class="label">Beschrijf je zelf:</td>
+        <td><%= form.text_area :profile_description, :size => 30, :rows => 8, :value => @user.profile_description -%></td>
+      </tr>
+      <tr class="gray">
+        <td class="label">CV:</td>
+        <td><%= form.text_area :profile_cv, :size => 30, :rows => 8,  :value => @user.profile_cv -%><br />Gebruik nieuwregels om punten in je CV te scheiden.</td>
+      </tr>
+      <tr class="gray">
+        <td class="label">Exposities:</td>
+        <td><%= form.text_area :profile_exposities, :size => 30, :rows => 5, :value => @user.profile_exposities -%><br />Gebruik punt-komma's (;) om exposities te scheiden.</td>
+      </tr>
+      <tr class="gray">
+        <td class="label">Behaalde awards:</td>
+        <td><%= form.text_area :profile_prijzen, :size => 30, :rows => 3, :value => @user.profile_prijzen -%><br />Gebruik punt-komma's (;) om awards/prijzen te scheiden.</td>
+      </tr>
+      <tr class="gray">
+        <td class="label">Disciplines:</td>
+        <td><%= form.text_field :profile_disciplines, :size => 30, :value => @user.profile_disciplines -%><br />Gebruik nieuwregels om punten in je discipline(s) te scheiden.</td>
+      </tr>
+      <tr class="gray">
+        <td class="label">Website:</td>
+        <td><%= form.text_field :profile_website, :size => 30, :value => @user.profile_website -%></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <h3>Priv&eacute; informatie</h3>
+          <p>Deze velden zijn vereist voor de verkoop van je kunst.</p>
+        </td>
+      </tr>
+      <% end %>
+
+      <tr class="gray">
+          <td class="label">Adres:</td>
+          <td><%= form.text_field :prive_adres, :size => 30, :value => @user.prive_adres -%></td>
+        </tr>
+      <tr class="gray">
+          <td class="label">Woonplaats:</td>
+          <td><%= form.text_field :prive_woonplaats, :size => 30, :value => @user.prive_woonplaats -%></td>
+        </tr>
+      <tr class="gray">
+          <td class="label">Postcode (1234 AB):</td>
+          <td><%= form.text_field :prive_postcode, :size => 7, :value => @user.prive_postcode -%></td>
+      </tr>
+
+      <% if @user.can('xpose') -%>
+        <tr class="gray">
+          <td class="label">Bankrekening:</td>
+          <td><%= form.text_field :prive_bankrek, :size => 30, :value => @user.prive_bankrek -%></td>
+        </tr>
+      <% end %>
+
+      <tr class="gray">
+          <td class="label">Telefoonnummer:</td>
+          <td><%= form.text_field :prive_telefoonnummer, :size => 15, :value => @user.prive_telefoonnummer -%></td>
+      </tr>
+      <tr class="gray">
+        <td class="label">Ontvang xposers mails:</td>
+        <td><%= form.check_box :receive_maillist, :checked => @user.receive_maillist -%></td>
+      </tr>
+    </table>
+    
+  </fieldset>
+<% end -%>
+<div class="form_row">
+	<%= submit_tag "Wijzig deze gebruiker", :class => "submit" -%>
+</div>
+<% end -%>

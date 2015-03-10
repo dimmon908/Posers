@@ -1,0 +1,149 @@
+
+
+<h2>Profiel</h2>
+
+<%= render :partial => 'menu' %>
+
+<%= form_for :user, :url => profile_url do |form| -%>
+  <table id="user-full">
+
+    <% if @me.errors.any? %>
+      <div id="error_explanation">
+        <ul>
+        <% @me.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <tr class="gray">
+      <td class="label">Voornaam: <span class="red">*</span></td>
+      <td><%= form.text_field :voornaam, :size => 30, :maxlength => 90, :value => @me.voornaam -%></td>
+    </tr>
+    <tr class="gray">
+      <td class="label">Tussenvoegsel:</td>
+      <td><%= form.text_field :tussenvoegsel, :size => 30, :maxlength => 190, :value => @me.tussenvoegsel -%></td>
+    </tr>
+    <tr class="gray">
+      <td class="label">Achternaam:  <span class="red">*</span></td>
+      <td><%= form.text_field :achternaam, :size => 30, :maxlength => 190, :value => @me.achternaam -%></td>
+    </tr>
+    <tr class="gray">
+      <td class="label">Email adres: <span class="red">*</span></td>
+      <td><%= form.text_field :email, :size => 30, :maxlength => 190, :value => @me.email -%></td>
+    </tr>
+
+    <% if @me.can('xpose') -%>
+    <tr class="gray">
+        <td class="label">&nbsp;</td>
+        <td><%= form.submit 'Opslaan' -%></td>
+      </tr>
+    
+    <tr>
+      <td colspan="2">
+        <h3>Gegevens voor in je kunstenaars profiel</h3>
+        <p>Velden die je leeg laat worden niet getoond in je publieke profiel.</p>
+      </td>
+    </tr>
+      <tr class="gray">
+        <td class="label">Geboorteplaats:</td>
+        <td><%= form.text_field :profile_geboorteplaats, :size => 30, :maxlength => 190, :value => @me.profile_geboorteplaats -%></td>
+      </tr>
+      <tr class="gray">
+        <td class="label">Geboortedatum of jaar:</td>
+        <td><%= form.text_field :profile_geboortedatum, :size => 30, :value => @me.profile_geboortedatum -%></td>
+      </tr>
+
+      <tr class="gray">
+        <td class="label">Beschrijf jezelf:</td>
+        <td><%= form.text_area :profile_description, :size => 30, :rows => 5, :value => @me.profile_description -%></td>
+      </tr>
+
+      <tr class="gray">
+        <td class="label">Opleiding(en):</td>
+        <td>
+          <%= form.text_area :profile_opleidingen, :size => 30, :value => @me.profile_opleidingen, :rows => 5 -%>
+          <br />Gebruik voor elke opleiding 1 regel.
+        </td>
+      </tr>
+
+      <tr class="gray">
+        <td class="label">Discipline(s):</td>
+        <td>
+          <%= form.text_area :profile_disciplines, :size => 30, :rows => 5, :value => @me.profile_disciplines -%>
+          <br />Gebruik per discipline 1 regel.
+        </td>
+      </tr>
+
+      <tr class="gray">
+        <td class="label">CV:</td>
+        <td>
+          <%= form.text_area :profile_cv, :size => 30, :rows => 5,  :value => @me.profile_cv -%>
+          <br />Gebruik voor elk punt in je CV 1 regel.
+        </td>
+      </tr>
+
+      <tr class="gray">
+        <td class="label">Exposities:</td>
+        <td>
+          <%= form.text_area :profile_exposities, :size => 30, :rows => 5, :value => @me.profile_exposities -%>
+          <br />Gebruik voor elke expositie 1 regel. 
+        </td>
+      </tr>
+      
+      <tr class="gray">
+        <td class="label">Behaalde awards:</td>
+        <td>
+          <%= form.text_area :profile_prijzen, :size => 30, :rows => 5, :value => @me.profile_prijzen -%>
+          <br />Gebruik per award/prijs 1 regel.
+        </td>
+      </tr>
+
+      <tr class="gray">
+        <td class="label">Website:</td>
+        <td><%= form.text_field :profile_website, :size => 30, :value => @me.profile_website -%></td>
+      </tr>
+    <tr>
+      <td colspan="2">
+        <h3>Privé informatie</h3>
+        <p>Deze velden zijn vereist voor de verkoop van je kunst.</p>
+      </td>
+    </tr>
+    <% end %>
+
+    <tr class="gray">
+        <td class="label">Adres:</td>
+        <td><%= form.text_field :prive_adres, :size => 30, :value => @me.prive_adres -%></td>
+      </tr>
+    <tr class="gray">
+        <td class="label">Woonplaats:</td>
+        <td><%= form.text_field :prive_woonplaats, :size => 30, :value => @me.prive_woonplaats -%></td>
+      </tr>
+    <tr class="gray">
+        <td class="label">Postcode (1234 AB):</td>
+        <td><%= form.text_field :prive_postcode, :size => 7, :value => @me.prive_postcode -%></td>
+    </tr>
+
+    <% if @me.can('xpose') -%>
+      <tr class="gray">
+        <td class="label">Bankrekening:</td>
+        <td><%= form.text_field :prive_bankrek, :size => 30, :value => @me.prive_bankrek -%></td>
+      </tr>
+    <% end %>
+
+    <tr class="gray">
+        <td class="label">Telefoonnummer:</td>
+        <td><%= form.text_field :prive_telefoonnummer, :size => 15, :value => @me.prive_telefoonnummer -%></td>
+      </tr>
+    <tr class="gray">
+        <td class="label">Ontvang xposers mails:</td>
+        <td><%= form.check_box :receive_maillist, :checked => @me.receive_maillist -%></td>
+      </tr>
+    <tr class="gray">
+      <td class="label">&nbsp;</td>
+      <td><%= form.submit 'Opslaan' -%></td>
+    </tr>
+
+  </table>
+<% end -%>

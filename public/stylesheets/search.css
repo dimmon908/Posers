@@ -1,0 +1,112 @@
+#sresults
+{
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+    width: 850px;
+}
+#sresults li
+{
+    float: left;
+    margin-right: 17px;
+    margin-bottom: 16px;
+    width: 188px;
+    background-color: #f1f1f1;
+}
+#sresults li div
+{
+    padding: 4px 8px 6px 8px;
+    font-size: 11px;
+    color: #4d4c4d;
+}
+#sresults li span
+{
+    clear: both;
+    display: block;
+    color: #fa9028;
+	font-size: 12px;
+}
+#sresults h4 a:link, #sresults h4 a:visited
+{
+    color:#21a7e0;
+    text-decoration: none;
+	font-size: 12px;
+	font-weight: normal;
+}
+#sresults img
+{
+    border: none;
+}
+#sresults p
+{
+	padding-bottom: 1px;
+	margin: 0px;
+}
+#sresults p a:link, #sresults p a:visited
+{
+    color: #4d4c4d;
+    text-decoration: none;
+}
+#sresults p a:hover
+{
+	text-decoration: underline;
+}
+#p1, #p2 {width: 43px;} #p1 {margin-right: 8px;}
+#searchbar1 {width: 110px;}
+
+#homesresults
+{
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+    width: 190px;
+}
+#homesresults li
+{
+    float: left;
+    margin-right: 17px;
+    margin-bottom: 16px;
+    width: 188px;
+    background-color: #f1f1f1;
+}
+#homesresults li div
+{
+    width: 141px;
+    margin-left: 8px;
+    padding-bottom: 6px;
+    padding-top: 4px;
+    font-size: 11px;
+    color: #4d4c4d;
+}
+#homesresults li span
+{
+    clear: both;
+    display: block;
+    color: #fa9028;
+	font-size: 12px;
+}
+#homesresults h4 a:link, #homesresults h4 a:visited
+{
+    color:#21a7e0;
+    text-decoration: none;
+	font-size: 12px;
+	font-weight: normal;
+}
+#homesresults img
+{
+    border: none;
+}
+#homesresults p
+{
+	padding-bottom: 1px;
+	margin: 0px;
+}
+#homesresults p a:link, #homesresults p a:visited
+{
+    color: #4d4c4d;
+    text-decoration: none;
+}
+#homesresults p a:hover
+{
+	text-decoration: underline;
+}

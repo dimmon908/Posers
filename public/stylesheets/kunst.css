@@ -1,0 +1,285 @@
+/*
+	Navigation
+*/
+.knav
+{
+	margin: 0px;
+	list-style: none;
+	padding: 0px;
+	height: 20px;
+	color: #2FAAE1;
+}
+.knav li { float: left;	border-right: 1px solid black;	margin-right: 4px;	padding-right: 4px;}
+.knav .mright
+{
+	float: right;
+	margin-right: 0px;
+	margin-left: 4px;
+	padding-left: 2px;
+	border-right: 1px solid gray;
+	color: gray;
+}
+.noborder {	border: none !important; }
+.knav a:link, .knav a:visited {	color: black; text-decoration: none;}
+.knav a:hover { text-decoration: underline;}
+.knav .mright a:link, .knav .mright a:visited {	color: gray;}
+/* 
+	image
+*/
+div.kimg
+{
+	width: 665px;
+	text-align: center;
+	margin: 0px;
+	position: relative;
+	overflow: hidden;
+}
+div.kimg a, div.kimg img
+{
+	margin: 0px;
+	padding: 0px;
+	border: none;
+	position: relative;
+}
+div.kimg img
+{
+	margin: 0px;
+}
+/* 
+	info table
+*/
+#kinfo
+{
+	width: 465px;
+	margin: 4px 0px 10px 0px;
+	list-style:none;
+	padding: 0px;
+	clear: both;
+	border-collapse: collapse;
+}
+h4
+{
+	clear: both;
+	font-size: 12px;
+}
+#kinfo td
+{
+	width: 105px;
+	border-right: 3px white solid;
+}
+#kinfo p
+{
+	padding: 0px;
+	font-size: 11px;
+}
+#kinfo span
+{
+	color: #2FAAE1;
+}
+#kinfo a:link, #kinfo a:visited
+{
+	color: black;
+	text-decoration: none;
+}
+#kinfo a:hover
+{
+	text-decoration: underline;
+}
+.koptions
+{
+	padding: 0px;
+	list-style: none;
+	margin: 0px;
+	padding-bottom: 8px;
+}
+.koptions li
+{
+	padding: 0px 0px 4px 0px;
+	cursor:pointer;
+}
+.koptions li a:link, .koptions li a:visited
+{
+	position: relative;
+	display: block;
+	width: 400px;
+	height: 24px;
+	color: black;
+	text-decoration: none;
+	padding: 0px;
+	cursor:pointer;
+}
+.koptions li a:hover {text-decoration: underline;}
+.koptions li a span
+{
+	display: block;
+	position: absolute;
+	top: 6px;
+	left: 30px;
+	padding: 0px;
+}
+.koptions #favo a:link, .koptions #favo a:visited {	background: url('./images/fav_full.png') no-repeat;}
+.koptions #favo.selected a:link, .koptions #favo.selected a:visited { background: url('./images/fav_full.png') no-repeat  0px -48px;}
+.koptions #favo a:hover { background-position: 0px -24px; }
+
+.koptions #appo a:link, .koptions #appo a:visited {	background: url('./images/app_full.png') no-repeat;}
+.koptions #appo.selected a:link, .koptions #appo.selected a:visited { background: url('./images/app_full.png') no-repeat  0px -48px;}
+.koptions #appo a:hover { background-position: 0px -24px; }
+
+.koptions #interieur a:link, .koptions #interieur a:visited {	background: url('./images/interieur_full.png') no-repeat;}
+.koptions #interieur a:hover { background-position: 0px -24px; }
+
+.koptions #tella a:link, .koptions #tella a:visited {	background: url('./images/tellafriend.jpg') no-repeat;}
+.koptions #tella a:hover { background-position: 0px -24px; }
+
+.koptions .artwork-social-button {
+  padding: 3px 2px;
+}
+
+.kdesc h4 { padding-top: 10px;}
+.kdesc p { padding: 0px;margin: 0px;}
+.kdesc {padding-bottom: 10px !important;color: black!important;}
+/*
+	replies
+*/
+#replies
+{
+	margin: 14px 0px 10px 0px;
+	padding: 0px;
+	list-style: none;
+}
+#replies li { border-top: 1px solid #2FAAE1; padding: 10px 0px 10px 0px; }
+#replies .buttons
+{
+	text-align: right;
+	color: gray;
+	font-size: 11px;
+}
+#replies .buttons a:link, #replies .buttons a:visited {	text-decoration: none;	color: gray;}
+#replies .msg .info {	position: relative;
+	width: 100px;
+	float: left;
+	font-weight: bold;
+}
+#replies .msg .info p {	margin: 0px 0px 10px 0px; padding:0px;}
+#replies .msg .m
+{
+	width: 350px;
+	float: left;
+}
+#replies .msg .m span
+{
+	clear: both;display: block;
+	padding-bottom: 4px;
+}
+/* kopen en verkopen */
+div.prijs
+{
+	width: 669px;
+	text-align: right;
+  overflow: auto;
+}
+
+div.prijs p {
+  clear: both;
+  padding: 10px;
+}
+
+.prijs .shipping-price {
+  margin-right: 74px;
+  font-weight: bold;
+}
+
+div.prijs span.p
+{
+	display: block;
+	float: right;
+	font-size: 18px;
+	font-weight: bold;
+	width: 100px;
+	padding-top:3px;
+}
+
+div.prices input[type="submit"]
+{
+	position: relative;
+	display: block;
+	float: right;
+	width: 63px;
+	height: 24px;
+	margin-left: 10px;
+	margin-right: 10px;
+	text-decoration: none;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+}
+
+div.prijs a span { visibility: hidden;}
+
+div.prices { 
+  overflow: auto;
+}
+
+div.prijs .sell input[type="submit"] {
+	background: url('./images/kopen.png') no-repeat;
+}
+
+.rent input[type="submit"] {
+	background: url('./images/huren.png') no-repeat;
+}
+
+div.verkocht, div.gereserveerd  
+{
+	position: relative;c 
+	display: block;
+	float: right;
+	width: 24px;
+	height: 24px;
+	background: url('./images/verkocht.png') no-repeat;
+	margin-left: 10px;
+	margin-right: 30px;
+	text-decoration: none;
+}
+div.verkocht span, div.gereserveerd span { visibility: hidden;}
+div.gereserveerd { background: url('./images/gereserveerd.png') no-repeat; width: 100px;}
+.pagination {
+  clear: both;
+  margin: 0px;
+  padding: 0px;
+}
+.pagination a, .pagination span
+{
+	color: #2FAAE1;
+	width: 15px;
+	padding:3px;
+	margin: 3px;
+	text-align: center;
+}
+
+.pagination a:hover {
+  color: #FA9028;
+	text-decoration: none;
+}
+
+.pagination .current {
+  font-weight: bold;
+  font-size: 25px;
+  color: #2FAAE1;
+  font-style: normal;
+}
+
+.pagination .disabled {
+  color: #2FAAE1;
+}
+
+.tags2 a:link, .tags2 a:visited {color: black;}
+h4.tags {font-weight: normal !important;}
+.abusedetail {border: 1px solid #D6D6D6; margin: 10px; padding: 5px; background: #EFEFEF;}
+#rapporteermisbruik { float: right; position: absolute; bottom: 5px; right: 5px;}#rapporteermisbruik a:link, #rapporteermisbruik a:visited {color: gray;}
+
+
+tr.gray td.label {
+  vertical-align: top;
+  padding: 7px 0 0;
+}
+

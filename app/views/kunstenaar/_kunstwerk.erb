@@ -1,0 +1,235 @@
+
+<h2><%=h @kv.title %></h2>
+
+<% 
+if !params[:page] or params[:page].blank? 
+
+  url = ''
+  if @ssid and !@ssid.blank?
+    if @cp and @cp != 0
+      url = url_for werkext_url(:page => 'beschrijving', :name => @kv.user.intname, :kunstid => @kv.id, :ssid => @ssid, :cp => @cp)
+      afburl = url_for :controller => 'kunst', :action => 'bekijkwerk', :id => @kv.id, :ssid => @ssid, :cp => @cp
+      cafburl = url_for :controller => 'kunst', :action => 'closeup', :id => @kv.id, :ssid => @ssid, :cp => @cp
+    else
+      url = url_for werkext_url(:page => 'beschrijving', :name => @kv.user.intname, :kunstid => @kv.id, :ssid => @ssid)
+      afburl = url_for :controller => 'kunst', :action => 'bekijkwerk', :id => @kv.id, :ssid => @ssid
+      cafburl = url_for :controller => 'kunst', :action => 'closeup', :id => @kv.id, :ssid => @ssid
+    end
+  else
+    url = url_for werkext_url(:page => 'beschrijving', :name => @kv.user.intname, :kunstid => @kv.id)
+    afburl = url_for :controller => 'kunst', :action => 'bekijkwerk', :id => @kv.id
+    cafburl = url_for :controller => 'kunst', :action => 'closeup', :id => @kv.id
+  end
+%>
+
+  <ul class="knav">
+    <li>info</li>
+
+    <% if @kv.closeup_id %>
+      <li><%= link_to 'close up', cafburl -%></li>
+    <% end -%>
+
+    <li class="noborder"><a href="<%= url %>">beschrijving</a></li>
+
+    <% if @logged_in and (@kv.user_id == @me.id or @me.can('admin')) %>
+      <li class="mright noborder"><a href="<%= url_for :controller => 'kunst', :action => 'wijzig', :id => @kv.id -%>">wijzig</a></li>
+      <li class="mright"><a href="<%= url_for :controller => 'xpose', :action => 'plaatsafbeelding', :id => @kv.id -%>">wijzig afbeelding</a></li>
+      <li class="mright"><a href="<%= url_for :controller => 'kunst', :action => 'verwijder', :id => @kv.id -%>">verwijder</a></li>
+    <% end %>
+  </ul>
+
+  <% if @kv.kunstimage -%>
+    <div class="kimg">
+      <a href="<%= afburl %>"><img src="<%= @kv.kunstimage.url('info') %>" alt="<%=h @kv.title -%>" title="<%=h @kv.title -%>" /></a>
+    </div>
+  <% end -%>
+
+  <div class="kdesc">
+    <h4 class="tags">Beschrijving</h4>
+
+    <% 
+    bes = sanitize(@kv.description.strip[0..100])
+    if @kv.description.size > 100 
+      bes = bes + "... " + link_to('lees meer', url)
+    end
+    %>
+
+    <%= simple_format(bes) -%>
+  </div>
+
+  <table id="kinfo">
+    <tr>
+      <td>
+        <span>Kunstenaar</span>
+        <p>
+          <%= link_to @kv.user.full_name, kunstenaar_url(:name => @kv.user.intname) %>
+        </p>
+      </td>
+      <td><span>Afmetingen</span><p><%=h @kv.width -%>cm x <%=h @kv.height -%>cm <% if !@kv.depth.blank? and @kv.depth > 0 -%> x <%= @kv.depth -%>cm <% end -%></p></td>
+      <% if !@kv.type.blank? -%>
+      <td><span>Type</span><p><a href="<%= searchresults_url(:type => @kv.type.id) -%>"><%=h @kv.type.title -%></a></p></td>	
+      <% end -%>
+    </tr>	
+
+	  <% i = 0; i2 = 0; %>
+
+    <% @kv.kunstproperties.each do |kp| %>
+      <% if i == 0 %>
+        <tr>
+      <% end %>
+
+      <% i = i + 1 -%><% i2 = i2 + 1 -%>
+          <td><span><%=h kp.propertycontainer.title -%></span><p><a href="<%= searchresults_url(:property => kp.id) -%>"><%=h kp.title -%></a></p></td>
+      <% if i == 3 %>
+      </tr>
+      <% i = 0
+        end %>
+
+      <% if @kv.kunstproperties.size == i2 -%>
+        </tr>
+      <% end %>
+
+    <% end %>
+
+  </table>	
+
+  <% if !@tags.blank? %>
+    <h4 class="tags">Trefwoorden</h4>
+
+    <p class="tags2">
+      <% @tags.each do |t| %>
+      <%= link_to sanitize(t), searchresults_url( :q => sanitize(t)) -%> 
+      <% end -%>
+    </p>
+  <% end %>
+
+  <% if !@kv.material.blank? %>
+    <h4 class="tags">Materialen</h4>
+    <p class="tags2">
+      <% @mats = @kv.material.split(' ') -%>
+      
+      <% @mats.each do |t| %>
+      <%= link_to sanitize(t), searchresults_url( :mat => sanitize(t)) -%> 
+      <% end %>
+    </p>
+  <% end %>
+
+  <ul class="koptions">
+    <li id="favo" <% if @fav -%> class="selected" <% end -%>>
+      <a href="<%= url_for :controller => 'kunst', :action => 'fav', :id => @kv.id -%>">
+        <span>
+          <% if @fav %>verwijderen van<% else %> toevoegen aan<% end %> favorietenlijst
+        </span>
+      </a>
+    </li>
+
+    <% if @logged_in and @kv.user_id != @me.id %>
+    <li id="appo" <% if @app %> class="selected" <% end %>>
+      <a href="<%= url_for :controller => 'kunst', :action => 'app', :id => @kv.id -%>">
+        <span>
+          <% if @app %>
+            ik waardeer dit werk niet meer (<%= @kv.appcount -%> waardering
+            <% if @kv.appcount != 1 -%>en<% end %>)
+          <% else -%> ik waardeer dit werk (<%= @kv.appcount -%> waardering
+            <% if @kv.appcount != 1 -%>en<% end %>)
+          <% end %>
+        </span>
+      </a>
+    </li>		
+    <% else %>
+    <li id="appo" <% if @app %> class="selected" <% end %>>
+      <a href="#"><span><%= @kv.appcount %> waardering<% if @kv.appcount != 1 %>en<% end %></span></a>
+    </li>
+    <% end %>
+
+    <% if !params[:ssid] %>
+    <li id="interieur">
+      <a href="<%= url_for :controller => 'kunst', :action => 'interieur', :id => @kv.id -%>"><span>bekijk dit werk in mijn interieur</span></a>
+    </li>
+    <% else %>
+
+      <% if params[:cp] %>
+      <li id="interieur">
+        <a href="<%= url_for :controller => 'kunst', :action => 'interieur', :id => @kv.id, :cp => params[:cp], :ssid => params[:ssid] -%>"><span>bekijk dit werk in mijn interieur</span></a>
+      </li>
+      <% else %>
+        <li id="interieur">
+          <a href="<%= url_for :controller => 'kunst', :action => 'interieur', :id => @kv.id, :ssid => params[:ssid] -%>"><span>bekijk dit werk in mijn interieur</span></a>
+        </li>
+      <% end %>
+
+    <% end %>
+
+    <li id="tella"><a href="<%= tellafriend_url(:id => @kv.id) -%>"><span>Stuur naar een vriend</span></a></li>
+
+    <li class="artwork-social-button">
+      <a href="https://twitter.com/share" class="twitter-share-button" data-lang="nl">Tweeten</a>
+      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    </li>
+
+    <li class="artwork-social-button facebook">
+      <div class="fb-like" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false"></div>
+    </li>
+  </ul> 
+
+  <div class="prijs">
+    <% if @kv.status == 2 %>
+      <div class="verkocht"><span>verkocht</span></div>
+    <% elsif @kv.status == 1 %>
+      <div class="gereserveerd"><span>gereserveerd</span></div>
+    <% else %>
+
+      <div class="prices sell">
+        <%= button_to "", order_aankoop_path(@kv.id), method: :get %>
+        <span class="p">€<%=h @kv.prijs %></span>
+      </div>
+
+      <% if @kv.for_rent %>
+        <div class="prices rent">
+          <%= button_to "", new_artwork_rent_path(@kv.id), method: :get %>
+          <span class="p">€<%=h rent_price(@kv.prijs) %></span>
+        </div>
+      <% end %>
+
+      <p class=shipping-price><%= shipping_info @kv.verzendmethode %></p>
+    <% end %>
+  </div>
+<% 
+
+elsif params[:page] == 'beschrijving'
+
+  url = ''
+  if @ssid and !@ssid.blank?
+    if @cp and @cp != 0
+      url = url_for werk_url(:name => @kv.user.intname, :kunstid => @kv.id, :ssid => @ssid, :cp => @cp)
+      cafburl = url_for :controller => 'kunst', :action => 'closeup', :id => @kv.id, :ssid => @ssid, :cp => @cp
+    else
+      url = url_for werk_url(:name => @kv.user.intname, :kunstid => @kv.id, :ssid => @ssid)
+      cafburl = url_for :controller => 'kunst', :action => 'closeup', :id => @kv.id, :ssid => @ssid
+    end
+  else
+    url = url_for werk_url(:name => @kv.user.intname, :kunstid => @kv.id)
+    cafburl = url_for :controller => 'kunst', :action => 'closeup', :id => @kv.id
+  end
+%>
+
+  <ul class="knav">
+  	<li><a href="<%= url %>">info</a></li>
+
+  	<% if !@kv.closeup_id.blank? %>
+  	<li><a href="<%= cafburl %>">close up</a></li>
+  	<% end %>
+
+  	<li class="noborder">beschrijving</li>
+
+  	<% if @kv.user_id == @me.id or @me.can('admin') %>
+  	<li class="mright noborder"><a href="<%= url_for :controller => 'kunst', :action => 'wijzig', :id => @kv.id -%>">wijzig</a></li>
+  	<li class="mright"><a href="<%= url_for :controller => 'kunst', :action => 'verwijder', :id => @kv.id -%>">verwijder</a></li>
+  	<% end %>
+
+  </ul>
+  <p>
+  	<%= simple_format(sanitize(@kv.description.strip)) %>
+  </p>
+
+<% end %>

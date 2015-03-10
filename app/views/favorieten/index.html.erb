@@ -1,0 +1,7 @@
+<h2>Favorieten</h2>
+<ul>
+	<% @favorieten.each do |f| %>
+	<li><a href="<%= url_for werk_url(:name => f.kunstvoorwerp.user.intname, :kunstid => f.kunstvoorwerp.id) %>"><%=h f.kunstvoorwerp.title -%></a> van <a href="<%= url_for kunstenaar_url(:name => f.kunstvoorwerp.user.intname) %>"><%=h f.kunstvoorwerp.user.voornaam -%> <%=h f.kunstvoorwerp.user.achternaam -%></a></li>
+	<% end -%>
+</ul>
+<%= @will_paginate -%>

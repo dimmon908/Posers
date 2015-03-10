@@ -1,0 +1,121 @@
+
+
+<h2>Nieuw kunstwerk</h2>
+<p>
+  Om een kunstwerk op xposers.nl te plaatsen vul je hieronder de gegevens
+  van je kunstwerk in. Na het invullen volgt een formulier om een afbeelding
+  te plaatsen. Kunstwerken zonder afbeelding verschijnen niet op de website,
+  dus zorg dat je een passende foto plaatst.
+</p>
+
+<% unless @artwork.errors.empty?%>
+  <h3>Fouten opgetreden tijdens aanmaken kunstwerk</h3>
+  <p>De volgende fouten speelden op:</p>
+  <ul>
+    <% @artwork.errors.each do |field, msg| %>
+      <li><%= msg %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<%= form_for @artwork, url: artworks_path do |form| %>
+  <table id="user-full">
+    <tr class="gray">
+      <td class="label"><span class="red">*</span> Titel:</td>
+      <td><%= form.text_field :title, :size => 30, :maxlength => 90 -%></td>
+    </tr>
+    <tr class="gray">
+      <td class="label"><span class="red">*</span> Omschrijving:</td>
+      <td><%= form.text_area :description, :rows => 8, :cols => 50 -%></td>
+    </tr>
+    <tr class="gray">
+      <td class="label">Trefwoorden:</td>
+      <td><%= form.text_area :tags, :rows => 3, :cols => 50 -%><br />Voeg hier trefwoorden toe om er voor te zorgen dat je kunstwerk gemakkelijk te vinden is met het zoeken. Scheid de trefwoorden met spaties.</td>
+    </tr>
+    <tr class="gray">
+      <td class="label">Materiaal:</td>
+      <td><%= form.text_area :material, :rows => 3, :cols => 50 -%><br />
+    Voeg hier de gebruikte materialen toe. Gebruik losse woorden (hout, aluminium, glas, alkydverf) en liever geen hele zinnen als 'ik gebruik op het strand gevonden takken' omdat dan de woorden 'ik' en 'strand' en 'gevonden' ook als materialen meetellen.
+    </td>
+    </tr>
+    <tr class="gray">
+      <td class="label"><span class="red">*</span> Prijs:</td>
+      <td><%= form.text_field :prijs, :size => 10, :maxlength => 20 -%> euro</td>
+    </tr>
+    <tr>
+      <td class="label">Beschikbaar voor verhuur</td>
+      <td><%= form.check_box :for_rent, { checked: true } %></td>
+    </tr>
+    <tr class="gray">
+      <td class="label">Verzendmethode</td>
+      <td>
+        <select name="kunstvoorwerp[verzendmethode]">
+        <option value="0">1) kan in de brievenbus en dat regel ik zelf</option>
+        <option value="1">2) versturen via pakketpost en dat regel ik zelf</option>
+        <option value="2">3) versturen via de pakketpost en dat regelt Xposers</option>
+        <option value="3">4) kan niet via pakketpost, neem contact met mij op</option>
+      </select>
+      </td>
+      </tr>
+    <tr>
+      <td class="label">&nbsp;</td>
+      <td>
+      De commissie die je afdraagt is afhankelijk van hoeveel je zelf doet aan het transport van het werk.
+      <ol>
+      <li>regel je zelf per briefpost: 20%</li>
+      <li>regel je zelf per pakketpost: 20%</li>
+      <li>regelt Xposers per pakketpost: 25%</li>
+      <li>regelt Xposers per speciaal transport: 30%</li>
+      </ol>
+    </td>
+    </tr>
+    <tr class="gray">
+      <td class="label"><span class="red">*</span> Hoogte:</td>
+      <td><%= form.text_field :height, :size => 10, :maxlength => 20 -%> cm</td>
+    </tr>
+    <tr class="gray">
+      <td class="label"><span class="red">*</span> Breedte:</td>
+      <td><%= form.text_field :width, :size => 10, :maxlength => 20 -%> cm</td>
+    </tr>
+    <tr class="gray">
+      <td class="label">Diepte:</td>
+      <td><%= form.text_field :depth, :size => 10, :maxlength => 20 -%> cm</td>
+    </tr>
+    <tr class="gray">
+      <td class="label"><span class="red">*</span> Type werk:</td>
+      <td>
+           <select name="kunstvoorwerp[type_id]" id="newbar" onchange="newselect()">
+             <option value="0">Maak een keuze</option>
+            <% @type.each do |t| -%><option value="<%= t.id -%>"><%= t.title -%></option><% end -%>
+          </select>
+      </td>
+    </tr>
+  <% @type.each do |t| %>
+    <% t.propertycontainers.each do |c| -%>
+      <% if !c.kunstproperties.blank? %>
+      <tr class="sb2 tn<%= t.id -%>">
+        <td class="label"><span class="red">*</span> <%= c.title -%></td>
+        <td>
+          <%= collection_select(:properties, 'c' + c.id.to_s, c.kunstproperties, :id, :title) %>
+        </td>
+      </tr>
+      <% end -%>
+    <% end -%>
+  <% end %>
+
+    <tr>
+      <td class="label">Hou mij op de hoogte van reacties</td>
+      <td><%= form.check_box :houmeopdehoogte -%></td>
+    </tr>
+    <tr class="noborder">
+      <td class="label">&nbsp;</td>
+      <td>
+     <%= submit_tag " Nieuw >>", :class => "submit", :id => 'nbutton', :disabled => true -%>
+      </td>
+    </tr>
+  </table>
+<% end %>
+
+<p>De met <span class="red">*</span> gemarkeerde velden zijn verplicht</p>
+
+

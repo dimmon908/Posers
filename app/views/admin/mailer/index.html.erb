@@ -1,0 +1,23 @@
+<h2>Mailer</h2>
+<h3>Stel een mail op</h3>
+<%= form_for :nmail, :url => {:action => 'create'} do |nf| -%>
+Titel: <%= nf.text_field :title, :value => '' -%><br />
+Bericht:
+<p><%= nf.text_area :message -%></p>
+<%= submit_tag 'Nieuw' -%>
+
+<% end -%>
+<h3>Te versturen mails</h3>
+<%= form_for :mail do |f| -%>
+<% if @mails and !@mails.blank? %>
+<ul>
+	<% @mails.each do |m| %>
+	<% if m.user -%>
+	<li><input type="checkbox" name="mail[to][]" value ="<%= m.id -%>" checked="checked"/>Naar: <%=h m.user.nickname -%> -  <%=h m.user.email -%> Titel: <%=h m.title -%> (<%= link_to 'Verwijderen', :action => 'delete', :id => m.id -%>)</li>
+	<% end -%><% end -%>
+</ul>
+<% end -%>
+<%= submit_tag 'Versturen' -%>
+<% end -%>
+<%= will_paginate @mails %>
+<%= link_to 'Verwijder alles', :action => 'deleteall' -%>

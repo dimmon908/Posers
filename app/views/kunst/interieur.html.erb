@@ -1,0 +1,159 @@
+
+<h2><%=h @kv.title %></h2>
+<ul class="knav">
+	<li><%= link_to 'info', werk_url(:name => @kv.user.intname, :kunstid => @kv.id) -%></li>
+	<li class="noborder"><%= link_to 'beschrijving', werkext_url(:name => @kv.user.intname, :kunstid => @kv.id, :page => 'beschrijving') %></li>
+</ul>
+
+<% if @interieur %>
+  <div id="interieur" style="width: 800px;">	
+
+    <div id="container">
+      <%= image_tag @interieur.url, width: '800' %>
+    </div>
+
+    <div id="resizeMe" style="width: <%= @kv_width %>px; height: <%= @kv_height %>px;">
+      <img src="<%= @kv.kunstimage.url('larger') %>" width="<%= @kv_width %>" height="<%= @kv_height %>" id="cwerk" />
+      <div id="resizeSE" class="rcontrol"></div>
+      <div id="resizeE" class="rcontrol"></div>
+      <div id="resizeNE" class="rcontrol"></div>
+      <div id="resizeN" class="rcontrol"></div>
+      <div id="resizeNW" class="rcontrol"></div>
+      <div id="resizeW" class="rcontrol"></div>
+      <div id="resizeSW" class="rcontrol"></div>
+      <div id="resizeS" class="rcontrol"></div>
+    </div>
+
+  </div>
+
+  <script type="text/javascript">
+
+    $(document).ready(function() {
+      $('#resizeMe').hover (function (){
+        $(".rcontrol").fadeIn();
+        
+      }, function () {
+        $(".rcontrol").fadeOut();
+        
+      } );
+      <%
+      width = @kv_width.to_f
+      height = @kv_height.to_f
+
+      ratio = height/width
+      %>
+      
+      $('#resizeMe').Resizable(
+        {
+          minWidth: 50,
+          minHeight: 50,
+          maxWidth: 700,
+          maxHeight: <%= (700 * @interieur_height) / @interieur_width %>,
+          ratio: <%= ratio.to_f %>,
+          minTop: 1,
+          minLeft: 1,
+          maxRight: 800,
+          maxBottom: <%= (800 * @interieur_height) / @interieur_width -%>,
+          dragHandle: true,
+          handlers: {
+            se: '#resizeSE',
+            e: '#resizeE',
+            ne: '#resizeNE',
+            n: '#resizeN',
+            nw: '#resizeNW',
+            w: '#resizeW',
+            sw: '#resizeSW',
+            s: '#resizeS'
+          },
+          onResize : function(size, position) {
+                    $("#cwerk").width(this.style.width);
+                    $("#cwerk").height(this.style.height);
+                  }		
+        }
+      )
+    });
+
+  </script>
+
+  <p>Afmetingen:<%=h @kv.width -%>cm x <%=h @kv.height -%>cm </p>
+
+  <p style="padding-top: 10px;">
+    <select name="url" onchange="goThere('url');" id="url">
+      <% @me.interieurs.each do |i| -%>
+      <option value="<%= url_for :action => 'interieur', :id => @kv.id, :int => i.id %>"<% if params[:int].to_i == i.id -%> selected<% end -%>>
+        interieur <%= i.filename || i.image_file_name %>
+      </option>
+      <% end %>
+    </select>
+    <%= link_to 'Upload en beheer mijn interieurs', :controller => 'interieur' -%>
+  </p>
+
+<% elsif @logged_in %>
+
+	<% if @me.interieurs.blank? %>
+
+    <h3>Upload een nieuw interieur</h3>
+    <%= error_messages_for :interieur %>
+
+    <%= form_for(:interieur, :url => url_for(:controller => 'interieur', :action => 'upload'), :html => { :multipart => true }) do |f| -%>
+    <table id="user-full">
+        <tr class="gray">
+        <td class="label">Bestand:</td>
+        <td><%= f.file_field :image %></td>
+      </tr>
+        <tr class="noborder">
+          <td colspan="2">
+            <%= hidden_field :kv, :kid, :value => @kv.id -%>
+            <%= submit_tag "Uploaden", :class => "submit" -%>
+          </td>
+        </tr>
+    </table>
+    <% end %>
+	
+	<% else %>
+
+	<p style="padding-top: 10px;">
+		Kies een interieur: 
+    <select name="url" onchange="goThere('url');" id="url">
+      <% @me.interieurs.each do |i| -%>
+      <option value="<%= url_for :action => 'interieur', :id => @kv.id, :int => i.id %>"<% if params[:int].to_i == i.id -%> selected<% end -%>>
+        <%=h i.filename %>
+      </option>
+      <% end %>
+    </select>
+  </p>
+	<%= link_to 'Upload en beheer mijn interieurs', :controller => 'interieur' -%>
+	</p>
+	<% end %>
+
+<% else %>
+
+  <p>Om gebruik te maken van de interieur functionaliteit moet je eerst <%= link_to 'ingelogd', login_url -%> zijn</p>
+
+<% end%>
+
+</div>
+
+<div class="s"></div>
+<div class="wide">
+<div class="h"></div>
+<div class="c">
+<ul id="sresults">
+  <% @kvs.each do |kv| %>
+  <li>
+    <% 
+    if params[:ssid] and !params[:ssid].blank?
+      if params[:cp] and !params[:cp].blank? and params[:cp] != 0
+        url = url_for :controller => 'kunst', :action => 'interieur', :id => kv.id, :int => params[:int], :ssid => params[:ssid], :cp => params[:cp]
+      else
+        url = url_for :controller => 'kunst', :action => 'interieur', :id => kv.id, :int => params[:int], :ssid => params[:ssid]
+      end
+    else
+      url = url_for :controller => 'kunst', :action => 'interieur',  :int => params[:int], :id => kv.id
+    end
+    %>
+    <a href="<%= url %>"><img src="<%= kv.kunstimage.url('square') %>" alt="<%=h kv.title -%>" /></a>
+  </li>
+  <% end %>
+</ul>
+<br style="clear: both;">

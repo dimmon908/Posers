@@ -1,0 +1,9 @@
+<h2>Meld misbruik op <%=h @kv.title -%></h2>
+
+<%= form_for :abuse do |form| -%>
+  <%= hidden_field_tag :id, params[:id] %>
+  <h4>Commentaar</h4>
+  <p>Geef in je commentaar duidelijk aan welke je reactie je bedoelt</p>
+  <%= form.text_area :message -%><br />
+  <%= submit_tag 'Meld bericht' -%>
+<% end -%>

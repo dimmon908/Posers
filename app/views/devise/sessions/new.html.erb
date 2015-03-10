@@ -1,0 +1,26 @@
+<h2>Inloggen</h2>
+
+<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+<table id="user-full">
+    <tr class="gray">
+      <td class="label">Gebruikersnaam:</td>
+	  <td><%= f.text_field :nickname, :size => 40, :maxlength => 40 -%></td>
+	</tr>
+    <tr>
+      <td class="label">Wachtwoord:</td>
+      <td><%= f.password_field :password, :size => 30, :maxlength => 40 -%></td>
+    </tr>
+    <% if devise_mapping.rememberable? -%>
+    <tr class="noborder">
+      <td class="label">&nbsp;</td>
+      <td><%= f.check_box :remember_me %> <%= f.label :remember_me, "Blijf ingelogd" %></td>
+    </tr>
+    <% end -%>
+ 	<tr class="noborder">
+      <td class="label">&nbsp;</td>
+      <td><%#= form.hidden_field :ref, :value => request.referer -%>
+        <%= f.submit "Login!", :class => "submit" -%></td>
+    </tr>
+</table>
+<% end %>
+<p>Als je je wachtwoord kwijt bent kun je <%= link_to 'hier', new_password_path(resource_name) -%> je wachtwoord terug halen.</p>

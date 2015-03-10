@@ -1,0 +1,38 @@
+<ul id="forumhead">
+  <li class="top">
+    <ul>
+      <li class="tinfo"><%= link_to 'Forum', viewforumindex_url %> > <%= link_to sanitize(@forum.title), viewforum_url(:id => @forum.id) %> > <%=h @topic.title %></li>
+    </ul>
+  </li>
+  <li class="bottom">
+    <ul class="forummenu">
+      <%= render :partial => "forum/menu" -%>
+    </ul>
+  </li>
+</ul>
+<h2>Preview <%=h @topic.title %></h2>
+	<ul id="forum_messages">
+	<li class="full">
+	<ul>
+	  <li class="top">
+	    <div class="nickname">
+	      <%=h  @me.nickname -%>
+	    </div>
+	    <div class="postinfo">
+	        <div class="time"><%= Time.now.strftime('%Y-%m-%d %H:%M')  %></div>
+	    </div>
+	  </li>
+
+	  <li class="bottom">
+	    <div class="info">
+	        <% if !@me.avatar.blank?  %>
+	                      <%= image_tag(@me.avatar.url) -%>
+	        <% end %>
+	    </div>
+	    <div class="message">
+		<%= @message[1] %>
+	    </div>
+	    <br style="clear: both" />
+	  </li>
+	</ul>
+    <br style="clear: both" />

@@ -1,0 +1,51 @@
+<h2>Forum permissions for <%=h @forum.title -%></h2>
+<p>These permissions allow the users linked to a role to perform certain tasks. Use them wisely.</p>
+<table>
+	<thead>
+		<tr>
+			<th></th>
+			<th>Role</th>
+			<th>Permission</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @permissions.each do |p| %>
+		<%= form_for(p, url: { action: 'forumpermissions', id: params[:id] }) do |f| %>
+		<tr>
+			<td><%= f.check_box :can -%></td>
+			<td><%= f.collection_select(:role_id, @roles, :id, :name, {:prompt => true}) %></td>
+			<td>
+				<select name="permission[action]">
+					<option value="view"<% if p.action =='view' -%>selected="selected"<% end -%>>View</option>
+					<option value="newtopic"<% if p.action =='newtopic' -%>selected="selected"<% end -%>>Post new topic</option>
+					<option value="reply"<% if p.action =='reply' -%>selected="selected"<% end -%>>Reply topic</option>
+					<option value="mod"<% if p.action =='mod' -%>selected="selected"<% end -%>>Moderate</option>
+				</select>
+			</td>
+			<td><%= f.hidden_field :permission_id, :value => p.id -%><%= f.submit 'Edit' -%></td>
+		</tr>
+		<% end -%>
+		<% end -%>
+	</tbody>
+</table>
+<h3>Add new permission</h3>
+<%= form_for(:permission, :url => {:action => 'createpermission', :id => params[:id]}) do |f| %>
+<table>
+	<tr>
+		<td><%= f.check_box :can -%></td>
+		<td><%= f.collection_select(:role_id, @roles, :id, :name) %></td>
+		<td>
+			<select name="permission[action]">
+				<option value="view">View</option>
+				<option value="newtopic">Post new topic</option>
+				<option value="reply">Reply topic</option>
+				<option value="mod">Moderate</option>
+			</select>
+		</td>
+		<td><%= f.submit 'Add' -%></td>
+	</tr>
+</table>	
+<% end -%>
+	
+	

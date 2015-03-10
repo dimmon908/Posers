@@ -1,0 +1,12 @@
+<h2>Stuur een bericht over <%= link_to sanitize(@kv.title), werk_url(:kunstid => @kv.id, :name => @kv.user.intname) -%> naar een vriend</h2>
+<% if @logged_in -%>
+	<%= form_for :mail do |form| -%>
+	<h4>Naam:<h4 /> <%= form.text_field :name -%>
+	<h4>E-mail adres:<h4 /> <%= form.text_field :email -%>
+	<h4>Bericht:</h4>
+	<%= form.text_area :message -%><br />
+	<%= submit_tag "Verstuur bericht"%>
+	<% end -%>
+<% else -%>
+	<p>Om gebruik te maken van deze dienst moet je <%= link_to 'ingelogd', login_url -%> zijn.</p>
+<% end -%>

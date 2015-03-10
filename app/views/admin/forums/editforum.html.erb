@@ -1,0 +1,8 @@
+	<%= form_for(:forumcategory) do |f| %>
+	Title: <%= f.text_field :title -%><br />
+	Moderators: <%= f.text_field :moderators -%><br />
+	Warnings untill hide: <%= f.text_field :warnings -%><br />
+	Short title: <%= f.text_field :short -%><br />
+	Description: <%= f.text_field :description -%><br />
+	<%= f.submit 'Edit'%>
+	<% end %>

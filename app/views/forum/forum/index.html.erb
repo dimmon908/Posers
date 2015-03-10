@@ -1,0 +1,61 @@
+<ul id="forumhead">
+  <li class="top">
+    <ul>
+      <li class="tinfo">Forum</li>
+    </ul>
+  </li>
+  <li class="bottom">
+    <ul class="forummenu">
+      <%= render :partial => "forum/menu" -%>
+    </ul>
+  </li>
+</ul>
+
+<% @forums.each do |wtf, parent_category| %>
+
+  <% if parent_category['categories'].size > 0 %>
+    <table id="forum_list">
+      <thead>
+        <tr>
+          <th class="title" colspan="2"><%= h parent_category['parent'].title %></th>
+          <th>Topics</th>
+          <th>Berichten</th>
+          <th>Laatste bericht</th>
+          <th class="last">Moderators</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% parent_category['categories'].each do |wtf, category| %>
+          <tr class="topic">
+
+            <td class="forum_image">
+              <% unless category.lastreply_at %>
+                <% if Time.parse(category.lastreply_at) > Time.parse(2.days.ago.to_s) -%>
+                  <%= image_tag('forum_topic_active.png') %>
+                <% else %>
+                  <%= image_tag('forum_topic_normal.png') %>
+                <% end %>
+              <% else %>
+                  <%= image_tag('forum_topic_normal.png') %>
+              <% end %>
+            </td>
+
+            <td class="title">
+              <strong><%= link_to category.title, viewforum_url(:id => category.id) %></strong>
+            </td>
+
+            <td><%=h category.forumtopics.count %></td>
+            <td><%=h category.forummessages.count %></td>
+            <td><%=h category.forummessages.last.user.nickname if category.forummessages.count > 0 %></td>
+            <td><%=h category.moderators %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+<% end %>
+
+<ul id="topichead">
+  <li class="tinfo">Forum</li>
+</ul>

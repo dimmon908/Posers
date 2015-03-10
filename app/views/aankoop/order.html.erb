@@ -1,0 +1,79 @@
+
+
+<h2>Aankoop <%=h @kunstvoorwerp.title -%></h2>
+
+<p>
+  Je staat op het punt om dit kunstobject aan te schaffen. Controleer eerst of 
+  de onderstaande gevens juist zijn. Indien ze niet kloppen kun je deze aanpassen. 
+  Om tot de aanschaf over te gaan accepteer je de algemene voorwaarden en klik je onderaan aanschaffen. 
+  Iemand van ons zal contact me je opnemen over de betaling, verwerking en 
+  verzending van het door jou gekozen object.
+</p>
+
+<h3>Het werk</h3>
+
+<ul id="kinfo">
+  <li>
+    <span>Kunstenaar</span><p>
+    <a href="<%= url_for kunstenaar_url(:name => @kunstvoorwerp.user.intname) -%>">
+      <%=h @kunstvoorwerp.user.voornaam -%> <%=h @kunstvoorwerp.user.achternaam -%>
+    </a>
+  </li>
+  <li>
+    <span>Afmetingen</span>
+    <p><%=h @kunstvoorwerp.width -%>cm x <%=h @kunstvoorwerp.height -%>cm </p>
+  </li>
+  <% @kunstvoorwerp.kunstproperties.each do |kp| %>
+  <li>
+    <span><%=h kp.propertycontainer.title -%></span>
+    <p><%=h kp.title -%></p>
+  </li>
+  <% end -%>
+</ul>
+
+<br style="clear: both;" />
+<h3>Uw gegevens</h3>
+
+<%= form_for :user, url: confirm_aankoop_path(@kunstvoorwerp.id) do |form| -%>
+
+  <% if current_user.errors.any? %>
+    <div id="error_explanation">
+      <ul>
+      <% current_user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <table>
+      <tr class="gray">
+        <td class="label">Voornaam:</td>
+        <td><%= form.text_field :voornaam, :size => 30, :maxlength => 90, :value => current_user.voornaam -%></td>
+      </tr>
+      <tr class="gray">
+        <td class="label">Achternaam:</td>
+        <td><%= form.text_field :achternaam, :size => 30, :maxlength => 190, :value => current_user.achternaam -%></td>
+      </tr>
+    <tr class="gray">
+        <td class="label">Adres:</td>
+        <td><%= form.text_field :prive_adres, :size => 30, :value => current_user.prive_adres -%></td>
+      </tr>
+    <tr class="gray">
+        <td class="label">Woonplaats:</td>
+        <td><%= form.text_field :prive_woonplaats, :size => 30, :value => current_user.prive_woonplaats -%></td>
+      </tr>
+    <tr class="gray">
+        <td class="label">Postcode (1234 AB):</td>
+        <td><%= form.text_field :prive_postcode, :size => 7, :value => current_user.prive_postcode -%></td>
+      </tr>
+    <tr class="gray">
+        <td class="label">Telefoonnummer:</td>
+        <td><%= form.text_field :prive_telefoonnummer, :size => 15, :value => current_user.prive_telefoonnummer -%></td>
+      </tr>
+    <tr class="gray">
+        <td class="label">&nbsp;</td>
+        <td><%= form.submit 'Koop dit object' -%></td>
+      </tr>
+  </table>
+<% end %>

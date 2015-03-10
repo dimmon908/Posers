@@ -1,0 +1,5 @@
+<h2>Verwijderen van <%=h @user.nickname -%></h2>
+<%= form_for :delete do |form| %>
+<p>Het verwijderen van een gebruiker is niet ongedaan te maken.</p>
+<%= submit_tag 'Verwijder' -%>
+<% end -%>

@@ -1,0 +1,70 @@
+nl:
+  errors:
+    messages:
+      expired: "is verlopen, kunt u een nieuwe aanvragen"
+      not_found: "niet gevonden"
+      already_confirmed: "is reeds bevestigd"
+      not_locked: "is niet gesloten"
+      not_saved:
+        one: "Een fout is verboden deze %{resource} wordt opgeslagen:"
+        other: "Wacht even, %{count} punten hebben nog even aandacht nodig."
+
+  devise:
+    failure:
+      unauthenticated: 'Je dient in te loggen of je in te schrijven.'
+      unconfirmed: 'Je dient eerst je account te bevestigen.'
+      locked: 'Je account is gelocked.'
+      invalid: 'Ongeldig gebruikersnaam of wachtwoord.'
+      invalid_token: 'Invalide authenticiteit token.'
+      timeout: 'Je sessie is verlopen, log a.u.b. opnieuw in.'
+      inactive: 'Je account is nog niet geactiveerd.'
+    sessions:
+      signed_in: 'Je bent succesvol ingelogd.'
+      signed_out: 'Je bent succesvol uitgelogd.'
+    passwords:
+      send_instructions: 'Een e-mail is naar je toe gestuurd met instructies voor het wijzigen van uw wachtwoord.'
+      updated: 'Je wachtwoord is gewijzigd. Je bent nu ingelogd.'
+      updated_not_active: 'Je wachtwoord is gewijzigd.'
+    confirmations:
+      send_instructions: 'Je ontvangt via e-mail instructies hoe je je account kan bevestigen.'
+      confirmed: 'Je account is bevestigd.'
+    registrations:
+      signed_up: 'Je bent inschreven.'
+      inactive_signed_up: 'Je bent ingeschreven. Je hebt een mail ontvangen met een activatielink om je account te bevestigen.' # %{reason}
+      updated: 'Je account gegevens zijn opgeslagen.'
+      destroyed: 'Je account is verwijderd, wellicht tot ziens!'
+      reasons:
+        inactive: 'inactief'
+        unconfirmed: 'niet bevestigd'
+        locked: 'opgesloten'
+    unlocks:
+      send_instructions: 'Je ontvangt via e-mail instructies hoe je je account kan un-locken.'
+      unlocked: 'Je account is ge-unlocked. Je kan nu weer inloggen.'
+    mailer:
+      confirmation_instructions:
+        subject: 'Bevestiging'
+      reset_password_instructions:
+        subject: 'Wachtwoord resetten'
+      unlock_instructions:
+        subject: 'Unlock instructies'
+
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              blank: 'Je moet een mailadres invoeren.'
+              taken: 'Het ingevoerde mailadres is al bij ons in gebruik. Er kan maar één gebruiker per mailadres worden aangemaakt.'
+              invalid: 'Je mailadres klopt niet.'
+              confirmation: 'De mailadressen zijn niet hetzelfde.'
+            password:
+              blank: 'Je hebt geen wachtwoord ingevoerd. Gebruik minimaal zes tekens.'
+              too_short: 'Je wachtwoord moet minimaal 6 tekens hebben.'
+              confirmation: 'De wachtwoorden zijn niet hetzelfde.'
+            voornaam:
+              blank: 'Je hebt je voornaam niet ingevuld.'
+            achternaam:
+              blank: 'Je hebt je achternaam niet ingevuld.'
+            nickname:
+              too_short: 'De gebruikersnaam is te kort, gebruik minimaal 2 tekens.'

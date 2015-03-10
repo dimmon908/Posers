@@ -1,0 +1,103 @@
+<ul id="forumhead">
+  <li class="top">
+    <ul>
+      <li class="tinfo">
+        <%= link_to sanitize(@forum.title[0..15]), viewforum_url(:id => @forum.id) %> 
+        <%= h @topic.title[0..60] %>
+        <%= ".." if @topic.title.size > 60 %>
+      </li>
+    </ul>
+  </li>
+
+  <li class="bottom">
+    <ul class="forummenu">
+      <%= render :partial => "forum/menu" -%>
+      <% if @me.role.forum_can('reply', 'forum', @topic.forumcategory_id) and (!@topic.locked or @me.role.forum_can('mod', 'forum', @topic.forumcategory_id)) %>
+      <li class="tinfo">
+        <%= link_to 'Plaats reactie', forum_newmessage_path(@topic.id) -%> 
+      </li>
+      <% end %>
+    </ul>
+  </li>
+</ul>
+
+<ul id="forum_messages">
+  <% @messages.each do |m| %>
+    <li class="full">
+      <ul>
+        <li class="top">
+          <div class="nickname">
+            <%= link_to sanitize(m.user.full_name), viewprofile_url(:id => m.user.id)  -%>
+          </div>
+
+          <div class="postinfo">
+            <div class="time">
+              <a name="p<%= m.id.to_s %>" href="<% if params[:page] %><%= viewtopicpage_url(:id => params[:id], :page => params[:page]) %><% else %><%= viewtopic_url(:id => params[:id]) %><% end %>#p<%= m.id.to_s %>">
+                <%= m.created_at.strftime('%d %b %Y %H:%M')  %>
+              </a>
+            </div>
+
+            <div class="buttons">
+              <%= link_to image_tag('forum_profil.png'), viewprofile_url(:id => m.user.id) %>
+              <% if @me.role.forum_can('mod', 'forum', @topic.forumcategory_id) %>
+                <% if m.topicstart %>
+                  <%= link_to image_tag('forum_deme.png'), movetopic_url(@topic.id) %>
+                  <%= link_to image_tag('forum_effacer.png'), deletetopic_url(:id => @topic.id) %>
+                <% else %>
+                  <%= link_to image_tag('forum_effacer.png'), message_path(m.id), method: :delete %>
+                <% end %>
+              <% end %>
+      
+              <% if user_signed_in? && !@topic.locked %>
+                <%= link_to image_tag('forum_rapporter.png'),  forumreportmessage_url(m.id) %>
+              <% end %>
+              
+              <% if (m.user.id == @me.id and !@topic.locked) or @me.role.forum_can('mod', 'forum', @topic.forumcategory_id)  %>
+                <% if m.topicstart -%>
+                  <%= link_to image_tag('forum_modifier.png'), edittopic_url(@topic.id) %>
+                <% else %>
+                  <%= link_to image_tag('forum_modifier.png'), forumeditmessage_url(m.id) %>
+                <% end %>
+              <% end %>
+              
+              <% if @me.role.forum_can('reply', 'forum', @topic.forumcategory_id) and (!@topic.locked or @me.role.forum_can('mod', 'forum', @topic.forumcategory_id)) %>
+                <%= link_to image_tag('forum_citer.png'), :action => 'newmessage', :id => @topic.id, :cite => m.id  -%>
+              <% end -%>
+            </div>
+          </div>
+        </li>
+
+        <li class="bottom">
+          <div class="info">
+              <% if !m.user.avatar.blank?  %>
+                <%= image_tag(m.user.avatar.url) -%>
+              <% end %>
+          </div>
+          <div class="message">
+            <% if @me.role.forum_can('mod', 'forum', @topic.forumcategory_id) and (m.hidden or m.reportcount > 0) -%>
+            <div class="note">
+              <% if m.hidden -%>
+              <p><strong>Dit bericht is niet zichtbaar voor normale gebruikers</strong></p>
+              <% end -%>
+              <% if m.reportcount > 0 -%>
+              <p><strong>Dit bericht heeft <%= m.reportcount -%> <%= link_to 'meldingen', viewreports_url(:id => m.id)  -%></strong></p>
+              <% end -%>
+            </div>
+            <% end %>
+            <%= m.processed.html_safe  %>
+          </div>
+          <br style="clear: both" />
+        </li>
+      </ul>
+    </li>
+  <% end %>
+</ul>
+
+<%= render 'form' %>
+
+<ul id="topichead">
+  <li class="tinfo">
+    <%= link_to 'Forum', viewforumindex_url %> > <%= link_to sanitize(@forum.title), viewforum_url(:id => @forum.id) %>
+  </li>
+  <li class="pages"><%= will_paginate @messages %></li>
+</ul>

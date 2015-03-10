@@ -1,0 +1,25 @@
+<h2>Interieurs</h2>
+<ul class="knav">
+	<li class="noborder"><%= link_to 'Plaats nieuw interieur', :action => 'upload' -%></li>
+</ul>
+<% if @logged_in -%>
+
+<ul id="interieurs">
+
+  <% @me.interieurs.each do |i| %>
+  <li>
+    <h3><%= i.filename -%> (<%= link_to 'Verwijderen', :action => 'verwijder', :id => i.id -%>)</h3>
+    <%= image_tag(i.url) %>
+    <div></div>
+  </li>
+  <% end %>
+
+</ul>
+
+<% else %>
+  <p>Om van deze functie gebruik te maken moet je <%=h link_to 'ingelogd', login_url -%> zijn</p>
+<% end %>
+
+<% if @me.interieurs.blank? %>
+  <p>Om gebruik te maken van de interieur functie moet je eerst interieurs uploaden. </p>
+<% end %>

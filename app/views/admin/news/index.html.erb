@@ -1,0 +1,24 @@
+<h2><%= @title -%></h2>
+<p><%= link_to "Nieuw", [:new, :admin, :news]%></p>
+<table id="myTable" class="tablesorter"> 
+  <thead> 
+    <tr> 
+    	<th>Inhoud</th> 
+    	<th>Auteur</th>
+      <th>Gemaakt</th>
+      <th></th>
+    </tr> 
+  </thead> 
+  <tbody> 
+  	<% @news.each do |n| %>
+  	<% decorator = NewsDecorator.new(n) %>
+  	<tr>
+    	<td><%= decorator.content.html_safe %> </td>
+    	<td><%= decorator.author_name %></td>
+    	<td><%= decorator.created_at -%></td>
+    	<td><%= link_to "Edit", [:edit, :admin, n]%>
+  	</tr>
+    <% end %>
+  </tbody> 
+</table> 
+<%= will_paginate @news %>

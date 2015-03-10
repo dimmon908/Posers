@@ -1,0 +1,11 @@
+<%= form_for :permission do |form| -%>
+<fieldset>
+	<legend>Are you sure you want to delete the permission?</legend>
+    <%= error_messages_for "permission" %>
+    <div class="form_row">
+		<%= submit_tag "Yes, delete it!", :class => "submit" -%>
+        <%= form.hidden_field(:role_id, :value => @role_id) %>
+        <%= form.hidden_field(:id, :value => params[:id]) %>
+	</div>
+</fieldset>
+<% end -%>

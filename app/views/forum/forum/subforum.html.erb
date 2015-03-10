@@ -1,0 +1,87 @@
+<ul id="forumhead">
+  <li class="top">
+    <ul>
+      <li class="tinfo"><%= link_to 'Forum', viewforumindex_url %> > <%= @forum.title %></li>
+    </ul>
+  </li>
+  <li class="bottom">
+    <ul>
+      <%= render :partial => "forum/menu" -%>
+      <li class="pages">
+		<% if @me.role.forum_can('newtopic', 'forum', @forum.id) %><div class="finfo"><%= link_to 'Nieuw topic', newtopic_url(:id => @forum.id) %></div><% end %>
+	 </li>
+    </ul>
+  </li>
+</ul>
+
+
+<table id="forum_list">
+  <thead class="topics">
+    <tr>
+      <th class="title" colspan="2">Titel</th>
+      <th>Berichten</th>
+      <th>Auteur</th>
+	    <th>Laatste Bericht</th>
+      <th class="last">Op</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @topics.blank? %>
+      <tr>
+        <td colspan="5">Geen topics in dit forum</td>
+      </tr>
+    <% end %>
+
+    <% @topics.each do |t| %>
+      <tr class="topic">
+        <td class="forum_image">
+          <% if t.ttype == 'announcement' -%>
+            <%= image_tag('forum_topic_announcement.png') -%>
+          <% elsif t.ttype == 'sticky' -%>
+            <%= image_tag('forum_topic_sticky.png') -%>
+          <% else %>
+            <% if t.locked %>
+              <%= image_tag('forum_topic_locked.jpg') -%>
+            <% elsif t.lastreply_user_datetime != nil %>
+              <% if t.lastreply_user_datetime > Time.parse(2.days.ago.to_s) -%>
+              <%= image_tag('forum_topic_active.png') -%>
+              <% else %>
+              <%= image_tag('forum_topic_normal.png') -%>
+              <% end -%>
+            <% else -%>
+              <%= image_tag('forum_topic_normal.png') -%>
+            <% end -%>
+          <% end -%>
+        </td>
+
+        <td class="title">
+          <%= link_to sanitize(t.title), viewtopic_url(:id => t.id) -%>
+          <% if t.message_count > 20 -%>
+            <%= forump(t.id, t.message_count) -%>
+          <% end -%>
+        </td>
+
+        <td><%= h(t.forummessages.count) -%></td>
+        <td><%= link_to sanitize(t.nickname), viewprofile_url(:id => t.user_id) -%> </td>
+        <td><%=h t.forummessages.last.user.nickname if t.forummessages %></td>
+        <td>
+          <% if t.forummessages %>
+            <%= t.forummessages.last.created_at.strftime('%d %b %Y %H:%M')  %>
+          <% else %>-
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<ul id="topichead">
+  <li class="tinfo">
+    <%= link_to 'Forum', viewforumindex_url %> > <%= @forum.title %>
+  </li>
+  <li class="pages">
+    <%= will_paginate @topics %>
+  </li>
+</ul>
+
+

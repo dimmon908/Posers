@@ -1,0 +1,45 @@
+<ul id="forumhead">
+  <li class="top">
+    <ul>
+      <li class="tinfo"><%= link_to 'Les Forums', viewforumindex_url %> > <%= link_to sanitize(@forum.title), viewforum_url(:id => @forum.id) %> > <%= link_to sanitize(@topic.title[0..40]), viewtopic_url(:id => @topic.id) %> <% if @topic.title.size > 40 -%>..<% end -%>	> Meldingen</li>
+    </ul>
+  </li>
+  <li class="bottom">
+    <ul>
+      <%= render :partial => "forum/menu" -%>
+    </ul>
+  </li>
+</ul>
+<% if !@reports.blank? %>
+<ul id="forum_messages">
+<% @reports.each do |r| %>
+  <li class="full">
+    <ul>
+      <li class="top">
+        <div class="nickname">
+          <%= r.user.utitle.gsub(/\[nickname\]/, sanitize(r.user.nickname)) -%>
+        </div>
+        <div class="postinfo">
+          <div class="time"><%= r.created_at.strftime('%Y-%m-%d %H:%M')  %></div>
+          <div class="buttons">
+            <%= link_to image_tag('forum_effacer.png'), deletereport_url(:id => r.id), :confirm => 'Are you sure?' -%>
+          </div>
+        </div>
+      </li>
+      <li class="bottom">
+        <div class="info">
+          <% if !r.user.avatar.blank?  %>
+            <%= image_tag(r.user.avatar.url) -%>
+          <% end %>
+        </div>
+          
+        <div class="message"><%=h r.message -%></div>
+        <br style="clear: both" />
+      </li>
+    </ul>
+  </li>
+<% end -%>
+</ul>
+<% else -%>
+<p>Geen meldingen</p>
+<% end -%>

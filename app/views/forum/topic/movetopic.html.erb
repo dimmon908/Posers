@@ -1,0 +1,36 @@
+<ul id="forumhead">
+  <li class="top">
+    <ul>
+      <li class="tinfo"><%= link_to 'Forum', viewforumindex_url %> > <%= link_to sanitize(@forum.title), viewforum_url(:id => @forum.id) %> > <%= h @topic.title[0..60] -%><% if @topic.title.size > 60 -%>..<% end -%></li>
+    </ul>
+  </li>
+  <li class="bottom">
+    <ul>
+      <%= render :partial => "forum/menu" -%>
+    </ul>
+  </li>
+</ul>
+<%= form_for :topic do |form| -%>
+<ul id="quickreply">
+<li class="top"><span>Verplaats "<%=h @topic.title%>"</span></li>
+<li class="bottom">
+	<table id="forum_topic">
+	  <tr class="gray">
+	    <td class="label"></td>
+	    <td>Verplaats topic naar</td>
+	  </tr>
+	  <tr class="gray">
+	    <td class="label"></td>
+	    <td>
+	    	<%= form.collection_select :forumcategory_id, @forums, :id, :title -%>
+	    </td>
+	  </tr>
+    <tr class="noborder">
+      <td class="label">&nbsp;</td>
+      <td>
+     <%= submit_tag "Verplaats", :class => "submit" -%>
+      </td>
+    </tr>
+	</table></li>
+<% end %>
+</ul>

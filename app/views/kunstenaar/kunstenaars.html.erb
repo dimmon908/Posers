@@ -1,0 +1,350 @@
+<div class="wide">
+<div class="h"></div>
+<div class="c">
+<h2>Kunstenaars</h2>
+
+<p><%= link_to 'A-D', kunstenaars_url(:page => 0) -%>
+  | <%= link_to 'E-G', kunstenaars_url(:page => 1) -%>
+  | <%= link_to 'H-J', kunstenaars_url(:page => 2) -%>
+  | <%= link_to 'K-N', kunstenaars_url(:page => 3) -%>
+  | <%= link_to 'O-R', kunstenaars_url(:page => 4) -%>
+  | <%= link_to 'S-V', kunstenaars_url(:page => 5) -%>
+  | <%= link_to 'W-Z', kunstenaars_url(:page => 6) -%>
+  | <%= link_to '1-?', kunstenaars_url(:page => 7) -%>
+</p>
+
+<% if params[:page].blank? or params[:page].to_i == 0 %>
+    <% count_per_row = (((@a1.count + @a2.count + @a3.count + @a4.count) /3) + 2) %>
+    <% current_count = 0 %>
+    <div class="artists">
+      <% unless @a1.empty? %><h3>A</h3><ul><% end %>
+        <% @a1.each do |k| %>
+          <li><%= link_to sanitize(user_fullname(k)), kunstenaar_url(:name => k.intname) -%></li>
+          <% current_count += 1 %>
+          <% if current_count >= count_per_row %>
+            <% current_count = 0 %>
+            </ul></div><div class="artists"><ul>
+          <% end %>
+        <% end -%>
+      <% unless @a1.empty? %></ul><% end %>
+      <% unless @a2.empty? %><h3>B</h3><ul><% end %>
+        <% @a2.each do |k| %>
+          <li><%= link_to sanitize(user_fullname(k)), kunstenaar_url(:name => k.intname) -%></li>
+          <% current_count += 1 %>
+          <% if current_count >= count_per_row %>
+            <% current_count = 0 %>
+            </ul></div><div class="artists"><ul>
+          <% end %>
+        <% end -%>
+      <% unless @a2.empty? %></ul><% end %>
+      <% unless @a3.empty? %><h3>C</h3><ul><% end %>
+        <% @a3.each do |k| %>
+          <li><%= link_to sanitize(user_fullname(k)), kunstenaar_url(:name => k.intname) -%></li>
+            <% current_count += 1 %>
+            <% if current_count >= count_per_row %>
+              <% current_count = 0 %>
+              </ul></div><div class="artists"><ul>
+            <% end %>
+          <% end -%>
+      <% unless @a3.empty? %></ul><% end %>
+      <% unless @a4.empty? %><h3>D</h3><ul><% end %>
+          <% @a4.each do |k| %>
+            <li><%= link_to sanitize(user_fullname(k)), kunstenaar_url(:name => k.intname) -%></li>
+            <% current_count += 1 %>
+            <% if current_count >= count_per_row %>
+              <% current_count = 0 %>
+              </ul></div><div class="artists"><ul>
+            <% end %>
+          <% end -%>
+      <% unless @a4.empty? %></ul><% end %>
+    </div>
+    <div class="clear"></div>
+
+<% elsif params[:page].to_i == 1 -%>
+  <% count_per_row = (((@a1.count + @a2.count + @a3.count + @a4.count) /3) + 2) %>
+    <% current_count = 0 %>
+    <div class="artists">
+      <% unless @a1.empty? %><h3>E</h3><ul><% end %>
+        <% @a1.each do |k| %>
+          <li><%= link_to sanitize(user_fullname(k)), kunstenaar_url(:name => k.intname) -%></li>
+          <% current_count += 1 %>
+          <% if current_count >= count_per_row %>
+            <% current_count = 0 %>
+            </ul></div><div class="artists"><ul>
+          <% end %>
+        <% end -%>
+      <% unless @a1.empty? %></ul><% end %>
+      <% unless @a2.empty? %><h3>F</h3><ul><% end %>
+        <% @a2.each do |k| %>
+          <li><%= link_to sanitize(user_fullname(k)), kunstenaar_url(:name => k.intname) -%></li>
+          <% current_count += 1 %>
+          <% if current_count >= count_per_row %>
+            <% current_count = 0 %>
+            </ul></div><div class="artists"><ul>
+          <% end %>
+        <% end -%>
+      <% unless @a2.empty? %></ul><% end %>
+      <% unless @a3.empty? %><h3>G</h3><ul><% end %>
+        <% @a3.each do |k| %>
+          <li><%= link_to sanitize(user_fullname(k)), kunstenaar_url(:name => k.intname) -%></li>
+          <% current_count += 1 %>
+          <% if current_count >= count_per_row %>
+            <% current_count = 0 %>
+            </ul></div><div class="artists"><ul>
+          <% end %>
+        <% end -%>
+      <% unless @a3.empty? %></ul><% end %>
+    </div>
+    <div class="clear"></div>
+<% elsif params[:page].to_i == 2 -%>
+    <% count_per_row = (((@a1.count + @a2.count + @a3.count + @a4.count) /3) + 2) %>
+    <% current_count = 0 %>
+    <div class="artists">
+      <% unless @a1.empty? %><h3>H</h3><ul><% end %>
+        <% @a1.each do |k| %>
+            <li><%= link_to sanitize(user_fullname(k)), kunstenaar_url(:name => k.intname) -%></li>
+            <% current_count += 1 %>
+            <% if current_count >= count_per_row %>
+                <% current_count = 0 %>
+                </ul></div><div class="artists"><ul>
+            <% end %>
+        <% end -%>
+      <% unless @a1.empty? %></ul><% end %>
+      <% unless @a2.empty? %><h3>I</h3><ul><% end %>
+        <% @a2.each do |k| %>
+            <li><%= link_to sanitize(user_fullname(k)), kunstenaar_url(:name => k.intname) -%></li>
+            <% current_count += 1 %>
+            <% if current_count >= count_per_row %>
+                <% current_count = 0 %>
+                </ul></div><div class="artists"><ul>
+            <% end %>
+        <% end -%>
+      <% unless @a2.empty? %></ul><% end %>
+      <% unless @a3.empty? %><h3>J</h3><ul><% end %>
+        <% @a3.each do |k| %>
+            <li><%= link_to sanitize(user_fullname(k)), kunstenaar_url(:name => k.intname) -%></li>
+            <% current_count += 1 %>
+            <% if current_count >= count_per_row %>
+                <% current_count = 0 %>
+                </ul></div><div class="artists"><ul>
+            <% end %>
+        <% end -%>
+      <% unless @a3.empty? %></ul><% end %>
+    </div>
+    <div class="clear"></div>
+<% elsif params[:page].to_i == 3 -%>
+    <% count_per_row = (((@a1.count + @a2.count + @a3.count + @a4.count) /3) + 2) %>
+    <% current_count = 0 %>
+    <div class="artists">
+      <% unless @a1.empty? %><h3>K</h3><ul><% end %>
+        <% @a1.each do |k| %>
+            <li><%= link_to sanitize(user_fullname(k)), kunstenaar_url(:name => k.intname) -%></li>
+            <% current_count += 1 %>
+            <% if current_count >= count_per_row %>
+                <% current_count = 0 %>
+                </ul></div><div class="artists"><ul>
+            <% end %>
+        <% end -%>
+      <% unless @a1.empty? %></ul><% end %>
+      <% unless @a2.empty? %><h3>L</h3><ul><% end %>
+        <% @a2.each do |k| %>
+            <li><%= link_to sanitize(user_fullname(k)), kunstenaar_url(:name => k.intname) -%></li>
+            <% current_count += 1 %>
+            <% if current_count >= count_per_row %>
+                <% current_count = 0 %>
+                </ul></div><div class="artists"><ul>
+            <% end %>
+        <% end -%>
+      <% unless @a2.empty? %></ul><% end %>
+      <% unless @a3.empty? %><h3>M</h3><ul><% end %>
+        <% @a3.each do |k| %>
+            <li><%= link_to sanitize(user_fullname(k)), kunstenaar_url(:name => k.intname) -%></li>
+            <% current_count += 1 %>
+            <% if current_count >= count_per_row %>
+                <% current_count = 0 %>
+                </ul></div><div class="artists"><ul>
+            <% end %>
+        <% end -%>
+      <% unless @a3.empty? %></ul><% end %>
+      <% unless @a4.empty? %><h3>N</h3><ul><% end %>
+        <% @a4.each do |k| %>
+            <li><%= link_to sanitize(user_fullname(k)), kunstenaar_url(:name => k.intname) -%></li>
+            <% current_count += 1 %>
+            <% if current_count >= count_per_row %>
+                <% current_count = 0 %>
+                </ul></div><div class="artists"><ul>
+            <% end %>
+        <% end -%>
+      <% unless @a4.empty? %></ul><% end %>
+    </div>
+    <div class="clear"></div>
+<% elsif params[:page].to_i == 4 -%>
+    <% count_per_row = (((@a1.count + @a2.count + @a3.count + @a4.count) /3) + 2) %>
+    <% current_count = 0 %>
+    <div class="artists">
+      <% unless @a1.empty? %><h3>O</h3><ul><% end %>
+        <% @a1.each do |k| %>
+            <li><%= link_to sanitize(user_fullname(k)), kunstenaar_url(:name => k.intname) -%></li>
+            <% current_count += 1 %>
+            <% if current_count >= count_per_row %>
+                <% current_count = 0 %>
+                </ul></div><div class="artists"><ul>
+            <% end %>
+        <% end -%>
+        <% unless @a1.empty? %></ul><% end %>
+        <% unless @a2.empty? %><h3>P</h3><ul><% end %>
+        <% @a2.each do |k| %>
+            <li><%= link_to sanitize(user_fullname(k)), kunstenaar_url(:name => k.intname) -%></li>
+            <% current_count += 1 %>
+            <% if current_count >= count_per_row %>
+                <% current_count = 0 %>
+                </ul></div><div class="artists"><ul>
+            <% end %>
+        <% end -%>
+        <% unless @a2.empty? %></ul><% end %>
+        <% unless @a3.empty? %><h3>Q</h3><ul><% end %>
+        <% @a3.each do |k| %>
+            <li><%= link_to sanitize(user_fullname(k)), kunstenaar_url(:name => k.intname) -%></li>
+            <% current_count += 1 %>
+            <% if current_count >= count_per_row %>
+                <% current_count = 0 %>
+                </ul></div><div class="artists"><ul>
+            <% end %>
+        <% end -%>
+        <% unless @a3.empty? %></ul><% end %>
+        <% unless @a4.empty? %><h3>R</h3><ul><% end %>
+        <% @a4.each do |k| %>
+            <li><%= link_to sanitize(user_fullname(k)), kunstenaar_url(:name => k.intname) -%></li>
+            <% current_count += 1 %>
+            <% if current_count >= count_per_row %>
+                <% current_count = 0 %>
+                </ul></div><div class="artists"><ul>
+            <% end %>
+        <% end -%>
+        <% unless @a4.empty? %></ul><% end %>
+    </div>
+    <div class="clear"></div>
+<% elsif params[:page].to_i == 5 -%>
+    <% count_per_row = (((@a1.count + @a2.count + @a3.count + @a4.count) /3) + 2) %>
+    <% current_count = 0 %>
+    <div class="artists">
+      <% unless @a1.empty? %><h3>S</h3><ul><% end %>
+        <% @a1.each do |k| %>
+            <li><%= link_to sanitize(user_fullname(k)), kunstenaar_url(:name => k.intname) -%></li>
+            <% current_count += 1 %>
+            <% if current_count >= count_per_row %>
+                <% current_count = 0 %>
+                </ul></div><div class="artists"><ul>
+            <% end %>
+        <% end -%>
+      <% unless @a1.empty? %></ul><% end %>
+      <% unless @a2.empty? %><h3>T</h3><ul><% end %>
+        <% @a2.each do |k| %>
+            <li><%= link_to sanitize(user_fullname(k)), kunstenaar_url(:name => k.intname) -%></li>
+            <% current_count += 1 %>
+            <% if current_count >= count_per_row %>
+                <% current_count = 0 %>
+                </ul></div><div class="artists"><ul>
+            <% end %>
+        <% end -%>
+      <% unless @a2.empty? %></ul><% end %>
+      <% unless @a3.empty? %><h3>U</h3><ul><% end %>
+        <% @a3.each do |k| %>
+            <li><%= link_to sanitize(user_fullname(k)), kunstenaar_url(:name => k.intname) -%></li>
+            <% current_count += 1 %>
+            <% if current_count >= count_per_row %>
+                <% current_count = 0 %>
+                </ul></div><div class="artists"><ul>
+            <% end %>
+        <% end -%>
+      <% unless @a3.empty? %></ul><% end %>
+      <% unless @a4.empty? %><h3>V</h3><ul><% end %>
+        <% @a4.each do |k| %>
+            <li><%= link_to sanitize(user_fullname(k)), kunstenaar_url(:name => k.intname) -%></li>
+            <% current_count += 1 %>
+            <% if current_count >= count_per_row %>
+                <% current_count = 0 %>
+                </ul></div><div class="artists"><ul>
+            <% end %>
+        <% end -%>
+      <% unless @a4.empty? %></ul><% end %>
+    </div>
+    <div class="clear"></div>
+<% elsif params[:page].to_i == 6 -%>
+    <% count_per_row = (((@a1.count + @a2.count + @a3.count + @a4.count) /3) + 2) %>
+    <% current_count = 0 %>
+    <div class="artists">
+      <% unless @a1.empty? %><h3>W</h3><ul><% end %>
+        <% @a1.each do |k| %>
+            <li><%= link_to sanitize(user_fullname(k)), kunstenaar_url(:name => k.intname) -%></li>
+            <% current_count += 1 %>
+            <% if current_count >= count_per_row %>
+                <% current_count = 0 %>
+                </ul></div><div class="artists"><ul>
+            <% end %>
+        <% end -%>
+      <% unless @a1.empty? %></ul><% end %>
+      <% unless @a2.empty? %><h3>X</h3><ul><% end %>
+        <% @a2.each do |k| %>
+            <li><%= link_to sanitize(user_fullname(k)), kunstenaar_url(:name => k.intname) -%></li>
+            <% current_count += 1 %>
+            <% if current_count >= count_per_row %>
+                <% current_count = 0 %>
+                </ul></div><div class="artists"><ul>
+            <% end %>
+        <% end -%>
+      <% unless @a2.empty? %></ul><% end %>
+      <% unless @a3.empty? %><h3>Y</h3><ul><% end %>
+        <% @a3.each do |k| %>
+            <li><%= link_to sanitize(user_fullname(k)), kunstenaar_url(:name => k.intname) -%></li>
+            <% current_count += 1 %>
+            <% if current_count >= count_per_row %>
+                <% current_count = 0 %>
+                </ul></div><div class="artists"><ul>
+            <% end %>
+        <% end -%>
+      <% unless @a3.empty? %></ul><% end %>
+      <% unless @a4.empty? %><h3>Z</h3><ul><% end %>
+        <% @a4.each do |k| %>
+            <li><%= link_to sanitize(user_fullname(k)), kunstenaar_url(:name => k.intname) -%></li>
+            <% current_count += 1 %>
+            <% if current_count >= count_per_row %>
+                <% current_count = 0 %>
+                </ul></div><div class="artists"><ul>
+            <% end %>
+        <% end -%>
+      <% unless @a4.empty? %></ul><% end %>
+    </div>
+    <div class="clear"></div>
+
+<% elsif params[:page].to_i == 7 -%>
+    <% count_per_row = (((@a1.count + @a2.count + @a3.count + @a4.count) /3) + 2) %>
+    <% current_count = 0 %>
+    <div class="artists">
+      <% unless @a1.empty? %>
+        <h3>1</h3>
+        <ul>
+      <% end %>
+        <% @a1.each do |k| %>
+            <li><%= link_to sanitize(user_fullname(k)), kunstenaar_url(:name => k.intname) -%></li>
+        <% end -%>
+      <% unless @a1.empty? %>
+        </ul>
+      <% end %>
+      <% unless @a2.empty? %>
+        <h3>?</h3>
+        <ul>
+      <% end %>
+        <% @a2.each do |k| %>
+            <li><%= link_to sanitize(user_fullname(k)), kunstenaar_url(:name => k.intname) -%></li>
+        <% end -%>
+      <% unless @a2.empty? %>
+        </ul>
+      <% end %>
+    </div>
+    <div class="clear"></div>
+<% end -%>
+</div>
+<div class="s"></div>
+
+</div>

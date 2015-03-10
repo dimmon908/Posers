@@ -1,0 +1,9 @@
+<%= form_for [:admin, @news] do |f| %>
+  <p>
+    <%= f.label :content %><br />
+    <%= f.text_field :content %>
+  </p>
+  <p>
+    <%= f.submit "Save" %>
+  </p>
+<% end %>

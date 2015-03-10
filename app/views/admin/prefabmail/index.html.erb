@@ -1,0 +1,33 @@
+<h2>Prefab mails</h2>
+<ul>
+<% @pms.each do |p| -%>	
+	<li><%= p.title %> (<%= link_to 'wijzig', :action => 'edit', :id => p.id -%> | <%= link_to 'verwijder', {:action => 'delete', :id => p.id}, :confirm => 'Zeker weten?', :method => 'delete'%>)</li>
+<% end -%>
+</ul>
+<h3>Nieuwe mail</h3>
+<% @mail.errors.full_messages.each do |msg| %>
+  <span><%= msg %></span>
+<% end %>
+<%= form_for @mail, :url => { :action => "create" } do |f| %>
+  <p>
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </p>
+  <p>
+    <%= f.label :content %><br />
+    <%= f.text_area :content -%>
+  </p>
+  <p>
+    <%= f.submit "Nieuw" %>
+  </p>
+  
+<% end -%>
+<fieldset>
+	<legend>Beschikbare variabelen</legend>
+<h4>Algemene variabelen</h4>
+<p>&lt;prijs&gt;, &lt;titel&gt;, &lt;linknaarobject&gt;, &lt;kv_id&gt;</p>
+<h4>Gegevens van de koper</h4>
+<p>&lt;k_voornaam&gt;, &lt;k_achternaam&gt;, &lt;k_adres&gt;,  &lt;k_postcode&gt;, &lt;k_woonplaats&gt;,</p>
+<h4>Gegevens verkoper</h4>
+<p>&lt;v_voornaam&gt;, &lt;v_achternaam&gt;, &lt;v_adres&gt;,  &lt;v_postcode&gt;, &lt;v_woonplaats&gt;, &lt;v_bankrekening&gt;</p>
+</fieldset>

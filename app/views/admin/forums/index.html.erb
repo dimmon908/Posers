@@ -1,0 +1,46 @@
+<h2>Forums</h2>
+<%= link_to 'Edit board permissions', :action => 'permissions' -%>
+<% @forums.each do |f| %>
+   <table id="forum_list">
+	<thead>
+		<tr>
+      <th class="title" colspan="2"><%=h f.title -%> (<%= link_to 'edit', :action => 'editcategory', :id => f.id -%> | <%= link_to 'delete', :action => 'deletecategory', :id => f.id -%>)</th>
+      <th>Topics</th>
+      <th>Replies</th>
+      <th class="last">Edit</th>
+</tr>
+	</thead>
+    <tbody>
+<% f.forumcategories.each do |forum| %>
+     <tr class="topic">
+        <td class="forum_image">
+				<%= image_tag('forum_topic_normal.png') -%>
+</td>
+		<td class="title">
+          <strong><%= link_to forum.title, viewforum_url(:id => forum.id) %></strong>
+        </td>
+		<td><%=h forum.topics_count %></td>
+		<td><%=h forum.messages_count %></td>
+		<td>(<%= link_to 'delete', :action => 'deleteforum', :id => forum.id -%> | <%= link_to 'edit', :action => 'editforum', :id => forum.id -%> | <%= link_to 'permissions', :action => 'forumpermissions', :id => forum.id -%>)</td>
+      </tr>
+<% end %>
+	<tr>
+		<td colspan="7">
+			<h4>Add new subforum</h4>
+			<%= form_for(:forumcategory, :url => {:action => 'createcategory', :id => f.id}) do |f| %>
+			Title: <%= f.text_field :title -%><br />
+			Moderators: <%= f.text_field :moderators -%><br />
+			Warnings untill hide: <%= f.text_field :warnings -%><br />
+			Short title: <%= f.text_field :short -%><br />
+			Description: <%= f.text_field :description -%><br />
+			<%= f.submit 'Create'%>
+			<% end %>
+		</td>
+	</tr>
+    </tbody>
+    </table>
+<% end %>
+<h4>Create new category</h4>
+<%= form_for(:parentcategory, :url => {:action => 'createparentcategory'}) do |f| -%>
+<%= f.text_field :title -%><%= f.submit 'Add' -%>
+<% end -%>

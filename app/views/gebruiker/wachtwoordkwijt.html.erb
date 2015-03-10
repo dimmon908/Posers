@@ -1,0 +1,14 @@
+<h2>Wachtwoord kwijt</h2>
+<p>Vul hier je gebruikersnaam in. Vervolgens wordt een mail met instructies om je wachtwoord terug te krijgen naar je toe gestuurd.</p>
+<%= form_for :user do |form| -%>
+<table id="user-full">
+    <tr class="gray">
+      <td class="label">Gebruikersnaam:</td>
+	  <td><%= form.text_field :nickname, :size => 40, :maxlength => 40 -%></td>
+	</tr>
+ 	<tr class="noborder">
+      <td class="label">&nbsp;</td>
+      <td><%= submit_tag "Versturen", :class => "submit" -%></td>
+    </tr>
+</table>
+<% end -%>

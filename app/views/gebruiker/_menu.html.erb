@@ -1,0 +1,11 @@
+<ul class="knav">
+<li><%= link_to_unless_current 'Mijn profiel', profile_url -%></li><% if @me.can('xpose') -%>
+<li><%= link_to_unless_current 'Mijn kunstwerken', mijnkunst_url -%></li><% end -%>
+<li><%= link_to_unless_current 'Wijzig mijn wachtwoord', wachtwoord_url -%></li>
+<% if @me.can('xpose') -%>
+<li><%= link_to_unless_current 'Wijzig mijn afbeelding', avatar_url -%></li>
+<li class="noborder"><%= link_to 'Bekijk profiel', kunstenaar_url(:name => @me.intname || @me.nickname) -%></li>
+<% else -%>
+<li class="noborder"><%= link_to_unless_current 'Wijzig mijn afbeelding', avatar_url -%></li>
+<% end -%>
+</ul>

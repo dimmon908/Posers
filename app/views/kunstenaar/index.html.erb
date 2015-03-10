@@ -1,0 +1,44 @@
+<div class="twocolumn">
+  <div class="main">
+    <div class="h"></div>
+    <div class="c">
+      <%= render :partial => 'kunstwerk' %>
+    </div>
+
+    <div class="s"></div>
+  </div>
+
+  <div class="right">
+    <div class="h"></div>
+    <div class="c">
+
+      <% if params[:ssid] %>
+        <h3>Zoekresultaten</h3>
+      <% else %>
+        <h3>Andere werken</h3>
+      <% end %>
+
+      <div class="imglist">
+      <% @kvs.each do |zij|
+        url = ''
+        if @ssid and !@ssid.blank?
+          if @cp and @cp != 0
+            url = url_for werk_url(:name => zij.user.intname, :kunstid => zij.id, :ssid => @ssid, :cp => @cp)
+          else
+            url = url_for werk_url(:name => zij.user.intname, :kunstid => zij.id, :ssid => @ssid)
+          end
+        else
+          url = url_for werk_url(:name => zij.user.intname, :kunstid => zij.id)
+        end
+      %>
+        <% if zij.kunstimage %>
+        <a href="<%= url %>"><img src="<%= zij.kunstimage.url('square_small') %>" /></a>
+        <% end -%>
+      <% end %>
+      </div>
+
+    </div>
+    <div class="s"></div>		
+  </div>
+  <%= render :partial => 'reacties' %>
+</div>

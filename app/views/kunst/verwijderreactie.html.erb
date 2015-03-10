@@ -1,0 +1,6 @@
+<%= error_messages_for "reactie", :header_message => "Fouten opgetreden tijdens reageren", :message => "De volgende fouten speelden op:" %>
+<h3>Verwijder commentaar op <%=h @reactie.kunstvoorwerp.title -%></h3>
+<p>Weet je zeker dat je deze reactie wilt verwijderen? Hierna is de reactie niet terug te halen.</p>
+<%= form_for :reply do |form| -%>
+<%= form.submit 'Verwijderen' -%>
+<% end %>

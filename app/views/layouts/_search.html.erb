@@ -1,0 +1,48 @@
+<div id="search" class="menu-border-radius">
+  <div class="c">
+    <form method="get" action="<%= url_for searchresults_url -%>">
+      <h3>Zoeken</h3>
+
+      <div id="search_options">
+        <%= check_box_tag 'conditions[for_rent]', 1, (params[:conditions][:for_rent] if params[:conditions]) %> 
+        Alleen huur <br/><br/>
+        <%= check_box_tag 'conditions[for_sale]', 1, (params[:conditions][:for_sale] if params[:conditions])  %>
+        Alleen beschikbare <br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; werken
+      </div>
+      <fieldset>
+
+        Soort kunstwerk
+        <select name="type" id="searchbar1" style="width: 140px;">
+          <option selected="selected">Geen voorkeur</option>
+          <optgroup label="2D">
+            <% @type2.each do |t| -%>
+                <option value="<%= t.id -%>"><%= h t.title[0..9] -%>
+                  <% if t.title.size > 9 -%>...
+                  <% end -%></option>
+            <% end -%>
+          </optgroup>
+          <optgroup label="3D">
+            <% @type3.each do |t| -%>
+                <option value="<%= t.id -%>"><%= h t.title[0..9] -%>
+                  <% if t.title.size > 9 -%>...
+                  <% end -%></option>
+            <% end -%>
+          </optgroup>
+        </select>
+
+        <p>Prijs:</p>
+        <input type="text" name="p1" size="6" style="width: 60px;" value="<%= h @prijs1 -%>" id="p1" onclick="this.value = ''"/>
+        <input type="text" name="p2" size="6" style="width: 60px;" value="<%= h @prijs2 -%>" onclick="this.value = ''" id="p2"/>
+
+        <p>Trefwoorden:</p> <input type="text" name="q" style="width: 135px;" value="<%= h @qopdracht -%>"/>
+        <input type="image" src="http://xposers.nl/stylesheets/images/search.png" alt="zoeken" style="margin-top: 4px;"/>
+
+        <p>
+          <%= link_to 'Uitgebreid zoeken', search_url -%>
+        </p>
+      </fieldset>
+
+    </form>
+  </div>
+</div>

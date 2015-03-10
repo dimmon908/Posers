@@ -1,0 +1,31 @@
+<ul id="forumhead">
+  <li class="top">
+    <ul>
+      <li class="tinfo"><%= link_to 'Forums', viewforumindex_url %> > <%= link_to sanitize(@forum.title), viewforum_url(:id => @forum.id) %> > <%= h @topic.title[0..60] -%><% if @topic.title.size > 60 -%>..<% end -%></li>
+    </ul>
+  </li>
+  <li class="bottom">
+    <ul class="forummenu">
+      <%= render :partial => "forum/menu" -%>
+    </ul>
+  </li>
+</ul>
+<ul id="quickreply">
+<li class="top"><span class="le">Nieuwe reactie op <%= h @topic.title[0..50] -%><% if @topic.title.size > 50 -%>..<% end -%></span></li>
+  <li class="bottom">
+    <%= form_for :message, :url => { :action => "newmessage", :id => @topic.id } do |form| -%>
+          <%= error_messages_for "message", :header_message => "Fouten", :message => "Er hebben zich bij het plaatsen van het bericht de volgende fouten voorgedaan" %>
+		<div>
+		<%= image_tag 'men_i.gif', :onclick => "insertAtCaret(document.getElementById('message_message'), bbImg())" -%>
+		<%= image_tag 'men_l.gif', :onclick => "insertAtCaret(document.getElementById('message_message'), bbUrl())" -%>
+		<%= image_tag 'men_b.gif', :onclick => "insertAtCaret(document.getElementById('message_message'), '[b][/b]')" -%>
+		<%= image_tag 'men_s.gif', :onclick => "insertAtCaret(document.getElementById('message_message'), '[s][/s]')" -%>
+		<%= image_tag 'men_u.gif', :onclick => "insertAtCaret(document.getElementById('message_message'), '[u][/u]')" -%>
+		</div>
+    <%= form.text_area :message, "rows" => 20, "cols" => 104, :value => @msg[0]  %><br />
+    <input type="hidden" id="tmode" name="message[postmode]" value="new" />
+      <%= submit_tag "Plaats reactie", :class => "submit" -%>
+  <% end %>
+    <br style="clear: both" />
+  </li>
+</ul>

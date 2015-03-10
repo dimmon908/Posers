@@ -1,0 +1,16 @@
+<h2>Wachtwoord kwijt</h2>
+<p>Vul hier je gebruikersnaam in. Vervolgens wordt een mail met instructies om je wachtwoord terug te krijgen naar je toe gestuurd.</p>
+
+<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
+  <%= devise_error_messages! %>
+  <table id="user-full">
+      <tr class="gray">
+        <td class="label">Email:</td>
+  	  <td><%= f.text_field :email, :size => 40 -%></td>
+  	</tr>
+   	<tr class="noborder">
+        <td class="label">&nbsp;</td>
+        <td><%= f.submit "Versturen", :class => "submit" -%></td>
+      </tr>
+  </table>
+<% end %>

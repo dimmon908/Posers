@@ -1,0 +1,109 @@
+#interieurs 
+{
+	list-style: none;
+	padding: 0px;
+}
+#interieurs li
+{
+    margin-bottom: 16px;
+    background-color: #f1f1f1;
+	width: 600px;
+	text-align: center;
+}
+#interieurs li div
+{
+	margin-left: 10px;
+	width: 590px;
+	text-align: left;
+	margin-top: 4px;
+	padding-bottom: 4px;
+}
+/* interieur stuff on site */
+#resizeMe
+{
+	position: absolute;
+	width: 200px;
+	height: 300px;
+	left: 20px;
+	top: 70px;
+	cursor: move;
+	background-repeat: no-repeat;
+}
+.rcontrol
+{
+	display: none;
+	
+}
+#resizeSE,
+#resizeE,
+#resizeNE,
+#resizeN,
+#resizeNW,
+#resizeW,
+#resizeSW,
+#resizeS
+{
+	position: absolute;
+	width: 8px;
+	height: 8px;
+	background-color: #333;
+	border: 1px solid #fff;
+	overflow: hidden;
+}
+#resizeSE{
+	bottom: 0px;
+	right: 0px;
+	cursor: se-resize;
+}
+#resizeE
+{
+	top: 50%;
+	right: 0px;
+	margin-top: 0px;
+	cursor: e-resize;
+}
+#resizeNE
+{
+	top: 0px;
+	right: 0px;
+	cursor: ne-resize;
+}
+#resizeN
+{
+	top: 0px;
+	left: 50%;
+	margin-left: 0px;
+	cursor: n-resize;
+}
+#resizeNW{
+	top: 0px;
+	left: 0px;
+	cursor: nw-resize;
+}
+#resizeW
+{
+	top: 50%;
+	left: 0px;
+	margin-top: 0px;
+	cursor: w-resize;
+}
+#resizeSW
+{
+	left: 0px;
+	bottom: 0px;
+	cursor: sw-resize;
+}
+#resizeS
+{
+	bottom: 0px;
+	left: 50%;
+	margin-left: 0px;
+	cursor: s-resize;
+}
+#container
+{
+}
+#interieur
+{
+	position: relative;
+}

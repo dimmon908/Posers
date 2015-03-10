@@ -1,0 +1,15 @@
+<form method="get" action="<%= url_for :action => 'find' -%>">
+  <select name="type">
+    <% @type.each do |t| %>
+      <option value="<%= t.id %>"><%= t.title %></option>
+    <% end %>
+  </select>
+  <% @type.each do |t| %>
+  <div id="t<%= t.id -%>">
+   <% t.stijls.each do |s| %>
+     hi
+     <% end %>
+  </div>
+  <% end %>
+  Trefwoorden: <input type="text" name="q" />
+</form>

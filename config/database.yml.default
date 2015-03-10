@@ -1,0 +1,23 @@
+# Common database configuration
+
+common: &common
+  adapter: mysql2
+  username: root
+  password: root
+  encoding: utf8
+
+development:
+  <<: *common
+  database: xposers_development
+
+test:
+  <<: *common
+  username: root
+  password: root
+  database: xposers_test
+
+production:
+  adapter: mysql2
+  username: root
+  password: root
+  database: xposers

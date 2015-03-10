@@ -1,0 +1,71 @@
+<ul id="forumhead">
+  <li class="top">
+    <ul>
+      <li class="tinfo"><%= link_to 'Forum', viewforumindex_url %> > Mijn topics</li>
+    </ul>
+  </li>
+  <li class="bottom">
+    <ul>
+      <%= render :partial => "forum/menu" -%>
+    </ul>
+  </li>
+</ul>
+<table id="forum_list">
+  <thead class="topics">
+    <tr>
+	  <th class="first" colspan="2">Forum</th>
+      <th class="title2">Titel</th>
+      <th>Berichten</th>
+      <th>Auteur</th>
+      <th class="last">Laatste bericht</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% if @topics.blank? %>
+<tr>
+	<td colspan="6">Geen actieve eigen topics</td>
+</tr>
+<% end -%>
+  <% @topics.each do |t| %>
+  <tr class="topic">
+     <td class="forum_image">
+	<% if t.ttype == 'announcement' -%>
+		<%= image_tag('forum_topic_announcement.png') -%>
+	<% elsif t.ttype == 'sticky' -%>
+		<%= image_tag('forum_topic_sticky.png') -%>
+	<% else %>
+		<% if t.locked %>
+			<%= image_tag('forum_topic_locked.jpg') -%>
+		<% elsif t.lastreply_user_datetime != nil %>
+			<% if t.lastreply_user_datetime > Time.parse(2.days.ago.to_s) -%>
+			<%= image_tag('forum_topic_active.png') -%>
+			<% else %>
+			<%= image_tag('forum_topic_normal.png') -%>
+			<% end -%>
+		<% else -%>
+			<%= image_tag('forum_topic_normal.png') -%>
+		<% end -%>
+	<% end -%>
+		</td>
+	  <td><%=h t.forumcategory.short -%></td>
+      <td class="title"><%= link_to sanitize(t.title), viewtopic_url(:id => t.id) -%>
+		<% if t.message_count > 20 -%>
+		<%= forump(t.id, t.message_count) -%>
+		<% end -%>
+	</td>
+      <td><%= h(t.message_count) -%></td>
+      <td><%= link_to sanitize(t.nickname), viewprofile_url(:id => t.user_id) -%> </td>
+      <td><% if t.lastreply_user_id != 0 %>
+      <%= Time.parse(t.lastreply_user_datetime.to_s).strftime('%d %b %Y %H:%M')  %>
+  <% else %>-
+<% end %>
+</td>
+  </tr>
+  <% end %>
+  </tbody>
+</table><ul id="topichead">
+  <li class="tinfo">
+<%= link_to 'Forums', viewforumindex_url %> > Mijn Topics
+  </li>
+  <li class="pages"><%= will_paginate @topics %></li>
+</ul>

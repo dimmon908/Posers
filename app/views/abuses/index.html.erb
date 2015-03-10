@@ -1,0 +1,22 @@
+<h2>Meldingen van misbruik</h2>
+<ul>
+	<% @sitemeldingen.each do |s| %>
+	  <% if !s.kunstvoorwerp.blank? -%>
+	
+      <li>
+        <%=h s.user.nickname -%> maakte melding in 
+        <%= link_to sanitize(s.kunstvoorwerp.title), werk_url(:name => s.kunstvoorwerp.user.intname, :kunstid => s.kunstvoorwerp.id) -%>
+        van <%=h s.kunstvoorwerp.user.nickname -%> op
+        <%=h s.created_at.strftime('%d %b %Y %H:%M') -%>
+        (<%= link_to 'verwijder', abus_path(s), :method => :post, :confirm => 'Zeker weten?' -%>)
+
+		    <div class="abusedetail">
+          <h4>Melding</h4>
+          <%=h s.message -%>
+        </div>
+      </li>
+		<% end -%>
+	<% end -%>
+</ul>
+
+<%= will_paginate @sitemeldingen -%>

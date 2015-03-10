@@ -1,0 +1,23 @@
+<%= form_for :user, :url => login_url do |form| -%>
+<h2>Inloggen</h2>
+<table id="user-full">
+    <tr class="gray">
+      <td class="label">Gebruikersnaam:</td>
+	  <td><%= form.text_field :nickname, :size => 40, :maxlength => 40 -%></td>
+	</tr>
+    <tr>
+      <td class="label">Wachtwoord:</td>
+      <td><%= form.password_field :password, :size => 30, :maxlength => 40 -%></td>
+    </tr>
+    <tr class="noborder">
+      <td class="label">&nbsp;</td>
+      <td><input type="checkbox" name="user[keep_logged_in]" value="1" <% if @keeploggedin == 1 %>checked="checked"<% end %>  /> Blijf ingelogd</td>
+    </tr>
+ 	<tr class="noborder">
+      <td class="label">&nbsp;</td>
+      <td><%#= form.hidden_field :ref, :value => request.referer -%>
+        <%= submit_tag "Login!", :class => "submit" -%></td>
+    </tr>
+</table>
+<% end -%>
+<p>Als je je wachtwoord kwijt bent kun je <%= link_to 'hier', :controller => 'gebruiker', :action => 'wachtwoordkwijt' -%> je wachtwoord terug halen.</p>

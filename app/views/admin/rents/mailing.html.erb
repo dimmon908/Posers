@@ -1,0 +1,26 @@
+
+<h2>Mail</h2>
+
+<%= form_for @mail, :url => send_email_admin_rent_path(params[:id]), method: 'post' do |f| -%>
+
+<p>
+  <%= f.label :title %><br />
+  <%= f.text_field :title %>
+</p>
+<p>
+  <%= f.label "Naar" %><br />
+  <%= f.text_field :to, :value => @email %>
+</p>
+<p>
+  <%= f.label "Van" %><br />
+  <%= f.text_field :from, :value =>'info@xposers.nl' %>
+</p>
+<p>
+  <%= f.label :content %><br />
+  <%= f.text_area :content, cols: 110 %>
+</p>
+<p>
+  <%= f.submit "Versturen" %>
+</p>
+<% end -%>
+

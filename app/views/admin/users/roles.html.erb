@@ -1,0 +1,19 @@
+<h2>Groepen</h2>
+<ul><% @roles.each do |r|  -%>
+  <li id="<%= r.id.to_s %>"><%= link_to r.name, :action => 'role', :id => r.id -%></li>
+<% end  -%>
+</ul>
+
+<%= form_for :role do |form| -%>
+<fieldset>
+	<legend>Nieuwe groep</legend>
+    <%= error_messages_for "role" %>
+	<div class="form_row">
+		<label for="name">Name:</label>
+		<%= form.text_field :name, :size => 20, :maxlength => 40 -%>
+	</div>
+	<div class="form_row">
+		<%= submit_tag "Create new role", :class => "submit" -%>
+	</div>
+</fieldset>
+<% end -%>

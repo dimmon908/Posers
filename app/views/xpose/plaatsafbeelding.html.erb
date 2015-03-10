@@ -1,0 +1,94 @@
+
+<%= javascript_include_tag 'jquery.fileupload/vendor/jquery.ui.widget' %>
+<%= javascript_include_tag 'jquery.fileupload/jquery.iframe-transport' %>
+<%= javascript_include_tag 'jquery.fileupload/jquery.fileupload' %>
+
+<script type="text/javascript" charset="utf-8"> 
+$(function () {
+
+  var _dataFileUploadObjectHolder = [];
+  var _completedFileUploadObjects = 0;
+
+  $(".upload").submit(function(event){
+    event.preventDefault();
+    for (i = 0; i < _dataFileUploadObjectHolder.length; i++) {
+      _dataFileUploadObjectHolder[i].submit();
+    }
+  });
+
+  $('.upload').fileupload({
+    dataType: 'json',
+    progressInterval: 10,
+    add: function(e, data) {
+      _dataFileUploadObjectHolder.push(data);
+      $('<p/>').text(data.files[0].name).prependTo('.upload');
+    },
+    formData: function (form) {
+      return form.serializeArray();
+    },
+    start: function (e) {
+      progressDiv();
+    },
+    progressall: function (e, data) {
+      var progress = parseInt(data.loaded / data.total * 100, 10);
+
+      $('#progress .bar').css('width', progress + '%');
+      $('#progress .uploading').text('Uploaden ' + progress + '%');
+    },
+    done: function (e, data) {
+      var div = $('<div/>').attr('class', 'uploaded-image').appendTo('.upload');
+      $('<img/>').attr('src', data.result.path).appendTo(div);
+
+      _completedFileUploadObjects++;
+
+      if (_dataFileUploadObjectHolder.length == _completedFileUploadObjects) {
+        window.location = "<%= werk_url(:name => @kv.user.intname, :kunstid => @kv.id) %>";
+      }
+    }
+  });
+
+  function progressDiv(param) {
+    param = typeof param !== 'undefined' ? param : 'add';
+
+    if (param == 'add') {
+      var div = $('<div/>').attr('id', 'progress').appendTo('.upload');
+
+      $('<p/>').attr('class', 'uploading').appendTo(div);
+      $('<div/>').attr('class', 'bar').css('width', '0%').appendTo(div);
+    } else {
+      $('#progress').remove();
+    }
+  }
+});
+</script>
+
+<h2>Upload afbeelding voor <%=h @kv.title %></h2>
+
+<p>
+  Het uploaden van je foto's kan langer duren, onderbreek het uploaden s.v.p. niet,
+  blijf even wachten totdat je je werk in beeld ziet.
+</p>
+
+<%= error_messages_for "afbeelding", :header_message => "Fouten opgetreden tijdens uploaden", :message => "De volgende fouten speelden op:" %>
+
+<%= form_for(:kunstimage, :html => { :multipart => true, :class => 'upload' }) do |f| -%>
+  <p>
+    <label for="uploaded_data">Bestand</label>
+    <%= f.file_field :image %>
+  </p>
+
+  <p>
+    <label for="closeup">Close-up (niet verplicht)</label>
+    <%= file_field :closeup, :image %>
+  </p>
+  <p class="checkbox-paragraph">
+    <%= check_box_tag "kunstimage[watermark]", "1", true %>
+
+    <span>
+      Voeg een watermerk toe ter beveiliging van mijn foto (vink dit uit als je een watermerk niet nodig vindt).
+      <br />
+      Het Xposers-watermerk komt enkel in de grote foto, de kwaliteit van de kleine foto-tjes is voor serieus onrechtmatig gebruik te laag.
+    </span>
+  </p>
+  <%= f.submit :submit, :value => 'Uploaden', :id => "multiple-artwork", :class => "start" %>
+<% end %>

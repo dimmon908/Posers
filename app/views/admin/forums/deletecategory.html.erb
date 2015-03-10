@@ -1,0 +1,5 @@
+<h2>Delete <%=h @category.title%></h2>
+<%= form_for(:category) do |f| -%>
+<p>You can not retrieve <strong>any</strong> data after deleting! This is a final step!</p>
+<%= f.submit 'Delete?' -%>
+<% end -%>

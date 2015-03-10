@@ -1,0 +1,32 @@
+nl:
+  will_paginate:
+    previous_label: "<"
+    next_label: ">"
+    page_gap: "&hellip;"
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            current_password:
+              invalid: Je hebt je huidige wachtwoord verkeerd ingevoerd.
+              blank:
+            eula:
+              accepted: 'Je moet akkoord gaan met de voorwaarden voordat je verder gaat.'
+  simple_captcha:
+    message:
+      user: 'Je moet de letters overtypen in het vakje eronder.'
+    label: 'Typ deze letters over (mag ook in kleine letters).'
+  devise:
+    failure:
+      already_authenticated: 'Je bent al ingelogd.'
+    registrations:
+      user:
+        signed_up_but_unconfirmed: 'Je bent ingeschreven. Je hebt een mail ontvangen met een activatielink om je account te bevestigen.'
+        inactive_signed_up: 'Je bent ingeschreven. Je hebt een mail ontvangen met een activatielink om je account te bevestigen.' # %{reason}
+        updated: 'Je account gegevens zijn opgeslagen.'
+        destroyed: 'Je account is verwijderd, wellicht tot ziens!'
+        reasons:
+          inactive: 'inactief'
+          unconfirmed: 'niet bevestigd'
+          locked: 'opgesloten'

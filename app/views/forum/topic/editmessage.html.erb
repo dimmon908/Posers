@@ -1,0 +1,75 @@
+<ul id="forumhead">
+  <li class="top">
+    <ul>
+      <li class="tinfo"><%= link_to 'Forum', viewforumindex_url %> > <%= link_to sanitize(@forum.title), viewforum_url(:id => @forum.id) %> > <%= h @topic.title[0..60] -%><% if @topic.title.size > 60 -%>..<% end -%></li>
+    </ul>
+  </li>
+  <li class="bottom">
+    <ul class="forummenu">
+      <%= render :partial => "forum/menu" -%>
+    </ul>
+  </li>
+</ul>
+<ul id="quickreply">
+  <li class="top">
+    <span class="le">
+      Wijzig reactie in <%= h @topic.title[0..50] -%>
+      <% if @topic.title.size > 50 -%>..<% end -%>
+    </span>
+  </li>
+  <li class="bottom">
+    <%= form_for :message, :url => { :action => "editmessage", :id => @message.id } do |form| -%>
+      <%= error_messages_for "message", :header_message => "Problemes", :message => "Vous avez indiqué information invalde" %>
+
+      <div id="wysihtml5-toolbar" style="display: none;">
+        <ul>
+          <li class=image data-wysihtml5-command="bold"><%= image_tag 'men_b.gif' %></li>
+          <li class=image data-wysihtml5-command="underline"><%= image_tag 'men_u.gif' %></li>
+
+          <!-- Some wysihtml5 commands like 'createLink' require extra paramaters specified by the user (eg. href) -->
+          <li class=image data-wysihtml5-command="createLink"><%= image_tag 'men_l.gif' %></li>
+          <li class=image data-wysihtml5-command="insertImage"><%= image_tag 'men_i.gif' %></li>
+        </ul>
+
+        <div data-wysihtml5-dialog="createLink" style="display: none;">
+          <label>
+            Link:
+            <input data-wysihtml5-dialog-field="href" value="http://" class="text">
+          </label>
+          <a data-wysihtml5-dialog-action="save">OK</a> <a data-wysihtml5-dialog-action="cancel">Cancel</a>
+        </div>
+
+        <div data-wysihtml5-dialog="insertImage" style="display: none;">
+          <label>
+            Image:
+            <input data-wysihtml5-dialog-field="src" value="http://">
+          </label>
+          <a data-wysihtml5-dialog-action="save">OK</a>
+          <a data-wysihtml5-dialog-action="cancel">Cancel</a>
+        </div>
+      </div>
+
+      <%= form.text_area :message, "rows" => 5, :style => "width: 100%;", :value => @msg[0].html_safe, :id => "wysihtml5-textarea"  %><br />
+
+      <input type="hidden" id="tmode" name="message[postmode]" value="new" />
+      <div>
+        <b>Verberg bericht</b>
+        <%= form.check_box :hidden -%>
+      </div>
+      <%= submit_tag "Wijzig reactie", :class => "submit", :onclick => "document.getElementById('tmode').value='new'" -%>
+    <% end %>
+    <br style="clear: both" />
+  </li>
+</ul>
+
+<!-- wysihtml5 parser rules -->
+<script src="/javascripts/wysihtml5/parser_rules/advanced.js"></script>
+<!-- Library -->
+<script src="/javascripts/wysihtml5/dist/wysihtml5-0.3.0.min.js"></script>
+
+<script>
+  var editor = new wysihtml5.Editor("wysihtml5-textarea", { // id of textarea element
+    toolbar:      "wysihtml5-toolbar", // id of toolbar element
+    parserRules:  wysihtml5ParserRules // defined in parser rules set 
+  });
+</script>

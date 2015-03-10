@@ -1,0 +1,16 @@
+<h2>Upload nieuwe afbeelding</h2>
+<%= error_messages_for "avatar", :header_message => "Fouten opgetreden tijdens het uploaden", :message => "De volgende fouten speelden op:" %>
+
+<%= form_for(@avatar, url: upload_gebruiker_index_path, :html => { :multipart => true }) do |f| -%>
+<table id="user-full">
+    <tr class="gray">
+		<td class="label">Bestand:</td>
+		<td><%= f.file_field :image %></td>
+	</tr>
+    <tr class="noborder">
+      <td colspan="2">
+        <%= submit_tag "Uploaden", :class => "submit" -%>
+      </td>
+    </tr>
+</table>
+<% end -%>

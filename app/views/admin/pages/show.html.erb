@@ -1,0 +1,13 @@
+<p>
+  <b>Title:</b>
+  <%=h @page.title %>
+</p>
+
+<p>
+  <b>Content:</b><br />
+  <%= @page.content.html_safe if @page.content %>
+</p>
+
+
+<%= link_to 'Edit', :action => 'edit', :id => @page.id %> |
+<%= link_to 'Back', :action => 'index' %>

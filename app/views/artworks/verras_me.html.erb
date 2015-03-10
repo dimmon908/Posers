@@ -1,0 +1,33 @@
+<h2>Zoekresultaten</h2>
+
+<ul id="sresults">
+  <% @artworks.each do |artwork| %>
+    <li>
+      <a href="<%= werk_url(:name => artwork.user.intname, :kunstid => artwork.id, :ssid => @ssid, :cp => @cp) %>">
+        <img src="<%= artwork.kunstimage.url('square') %>" alt="<%=h artwork.title -%>" />
+      </a>
+      <div class="info">
+          <h4>
+            <% title = h artwork.title[0..22].strip %>
+            <% title += " ..." if artwork.title.size > 22 %>
+            <%= link_to title, werk_url(:name => artwork.user.intname, :kunstid => artwork.id, :ssid => @ssid, :cp => @cp) %> 
+          </h4>
+          <p>Door: 
+            <a href="<%= kunstenaar_url(:name => artwork.user.intname) %>">
+              <% name = "#{artwork.user.voornaam} #{artwork.user.achternaam}" %>
+              <%= name[0..22].strip %> <%= "..." if name.size > 22 %>
+            </a>
+          </p>
+          <span class="waarderingen">
+            <%= artwork.appcount %> waardering<% if artwork.appcount != 1 %>en<% end -%>
+          </span>
+      </div>
+    </li>
+  <% end %>
+</ul>
+
+<div class="verras_me">
+  <%= link_to image_tag('verras_me_opnieuw.png'), verras_me_artworks_path %>
+</div>
+
+<br style="clear: both;" />

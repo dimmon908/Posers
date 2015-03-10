@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title><% if @title -%><%=h @title -%> - xposers<% else %>xposers - Laat zien wat je maakt<% end -%>   </title>
+    <link rel="icon" type="image/png" href="<%= root_url -%>favicon.png">
+    <%= javascript_include_tag('jquery.js') %>
+    <%= javascript_include_tag('interface.js') %>
+    <%= javascript_include_tag('application.js') %>
+    <%= stylesheet_link_tag "default" -%>
+    <%= stylesheet_link_tag "search" -%>
+    <%= stylesheet_link_tag "forum" -%>
+    <%= stylesheet_link_tag "kunst" -%>
+    <%= csrf_meta_tags %>
+    <%= render :partial => 'layouts/meta' -%>
+  </head>
+<body>
+
+  <div id="wrapper">
+
+    <%= render :partial => 'layouts/header'  %>
+
+    <div id="left">
+      <%= render partial: 'layouts/menu'  %>
+      <%= render partial: 'layouts/search'  %>
+      <%= render partial: 'layouts/ads' %>
+    </div> 
+
+    <div id="right">
+      <%= render :partial => 'layouts/flash', :locals => { :flash => flash }  %>
+      <%= yield %>
+      <ul id="disclaimer">
+        <li><a href="<%= disclaimer_url %>">disclaimer</a></li> 
+        <li>&copy; <%= Time.now.strftime('%Y') -%> xposers</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <%= render :partial => 'layouts/google' -%>
+</body>
+</html>

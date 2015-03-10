@@ -1,0 +1,37 @@
+<div class="main-menu-wrapper">
+  <div class="menu-left-wrapper">
+    <ul id="menu2" class="menu-border-radius">
+      <li><%= link_to 'home', root_url -%></li>
+      <% if @logged_in and @me.isrole('admin') -%>
+      <li><%= link_to 'admin', admin_url %></li>
+      <% end -%>
+      <li class="noborder"><%= link_to 'xposeren', new_artwork_path %></li>
+    </ul>
+
+    <ul id="menu1" class="main-menu-left menu-border-radius">
+      <li><%= link_to 'forum', viewforumindex_url -%></li>
+      <li><%= link_to 'kunstenaars', kmenu_url -%></li>
+      <li class="noborder"><%= link_to 'over xposers', overxposers_url -%> </li>
+    </ul>
+  </div>
+
+  <ul id="menu3" class="menu-border-radius">
+    <li><%= link_to 'toon me alles!', '/zoekresultaten?sort=date'%></li>
+    <li><%= link_to 'verras me', verras_me_artworks_path %></li>
+    <li>
+      <% unless @page_for_agenda.nil? %>
+        <%= link_to 'agenda', pagina_path(@page_for_agenda.id) %>
+      <% else %>
+        agenda
+      <% end %>
+    </li>
+    <li><%= link_to 'voor bedrijven', pagina_path(59) %></li>
+    <li class="noborder like-button">
+      <iframe src="http://www.facebook.com/plugins/like.php?href=www.xposers.nl&send=false&layout=button_count&width=150&show_faces=false&action=like&colorscheme=light&font&height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:150px; height:21px;" allowTransparency="true"></iframe>
+    </li>
+    <li class="noborder tweet-button">
+      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://xposers.nl/" data-lang="nl">Tweeten</a>
+      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    </li>
+  </ul>
+</div>

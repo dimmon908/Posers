@@ -1,0 +1,30 @@
+<h2>Wijzig mijn wachtwoord</h2>
+<%= render :partial => 'menu' %>
+<%= form_for(current_user, :url => registration_path(current_user), :html => { :method => :put }) do |f| %>
+  <table id="user-full">
+  <tr>
+    <td class="label">Wachtwoord:</td>
+    <td>
+      <%= f.password_field :password, :size => 30, :maxlength => 40 -%>
+    </td>
+  </tr>
+  <tr class="gray">
+    <td class="label">Wachtwoord ter bevestiging</td>
+    <td>
+      <%= f.password_field :password_confirmation, :size => 30, :maxlength => 40 -%>
+    </td>
+  </tr>
+  <tr class="gray">
+    <td class="label">Huidige wachtwoord</td>
+    <td>
+      <%= f.password_field :current_password, :size => 30, :maxlength => 40 -%>
+    </td>
+  </tr>
+      <tr class="noborder">
+        <td class="label">&nbsp;</td>
+        <td>
+       <%= submit_tag " Wijzigen", :class => "submit" -%>
+        </td>
+      </tr>
+  </table>
+<% end %>

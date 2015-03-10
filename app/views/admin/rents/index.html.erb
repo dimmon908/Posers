@@ -1,0 +1,29 @@
+<h2>Verhuren</h2>
+
+<table class=generic>
+	<tr>
+		<td>Gekocht op</td>
+		<td>Gehuurd</td>
+		<td>Verhuuder</td>
+		<td>Status</td>
+		<td>&nbsp;</td>
+	</tr>
+  <% @rents.each do |rent| %>
+    <tr>
+      <td> <%= rent.created_at %> </td>
+      <td>
+        <%= rent.user.voornaam %>	<%= rent.user.achternaam %>
+      </td>
+      <td>
+        <%= rent.kunstvoorwerp.title %> (by	<%= rent.kunstvoorwerp.user.voornaam %> <%= rent.kunstvoorwerp.user.voornaam %>)
+      </td>
+      <td>
+        <%= rent.status %>
+      </td>
+      <td><%= link_to 'Bekijk gegevens', [:admin, rent] %></td>
+    </tr>
+    <% end %>
+</table>
+
+<%= will_paginate @rents %>
+

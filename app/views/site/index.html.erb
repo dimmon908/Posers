@@ -1,0 +1,99 @@
+<div class="wide_home">
+  <div class="h2">
+    <ul id="home">
+    <% i = 0%>
+    <% @kvs.each do |kv| %>
+      <% i += 1 %>
+      <% if kv.kunstimage && kv.kunstimage.url %>
+      <li class="hm<%= i %>">
+        <a href="<%= werk_url(:name => kv.user.intname, :kunstid => kv.id, :ssid => @ssid, :cp => @cp) %>">
+          <img src="<%= kv.kunstimage.url('square') %>" alt="<%=h kv.title %>" title="<%= kv.title %>"/>
+        </a>
+      </li>
+      <% else %>
+      <li class="hm<%= i %>">
+        <a href="<%= werk_url(:name => kv.user.intname, :kunstid => kv.id, :ssid => @ssid, :cp => @cp) %>">
+          <img src="<% root_url %>images/err_im_square.png" alt="<%=h kv.title %>" title="<%= kv.title %>"/>
+        </a>
+      </li>
+      <% end %>
+    <% end %>
+    </ul>
+
+    <div id="artinfo">
+      <% i = 0%>
+      <% @kvs.each do |kv| %>
+      <% i += 1 %>
+        <div class="a<%= i %> bz">
+          <div class="hc"></div>
+          <div class="cn">
+            <h3><%=h kv.title %></h3>
+            <h5><a href="<%= kunstenaar_url(:name => kv.user.intname) %>"><%=h kv.user.voornaam -%> <%=h kv.user.achternaam %></a></h5>
+            <p><%=h kv.description[0..100] %></p>
+            <% tags = kv.tags.split(" ") %>
+            <% if !tags.blank? %>
+            <h5>Trefwoorden</h5>
+            <p class="tags">
+              <% tags.each do |t| %>
+              <%= link_to sanitize(t), searchresults_url( :q => sanitize(t)) %> 
+              <% end %>
+            </p>
+            <% end %>
+          </div>
+          <div class="bc"></div>
+        </div>
+      
+      <% end %>
+    </div>
+
+    <span class="stats">Xposers.nl heeft <%= @art %> kunstwerken, <%= @members %> leden en <%= @messages %> berichten op het forum.</span>
+	</div>
+
+	<div class="c"><%= @central_page.html_safe %></div> 
+	<div class="s"></div>
+
+</div>
+
+<div class="wide_small">
+  <%= @right_column.html_safe %>
+  <p><strong><span style="font-size: 14px; color:#FA9028;">Kijk ook eens naar:</span></strong></p>
+
+  <ul id="homesresults">
+    <li>
+      <a href="<%= url_for werk_url(:name => @rand_picture_01.user.intname, :kunstid => @rand_picture_01.id, :ssid => @ssid, :cp => @cp) %>">
+        <% if @rand_picture_01.kunstimage -%>
+          <img src="<%= @rand_picture_01.kunstimage.url('square') %>" alt="<%=h @rand_picture_01.title -%>" />
+        <% else %>
+          <img src="<% root_url -%>images/err_im_square.png" alt="<%=h @rand_picture_01.title -%>" />
+        <% end %>
+      </a>
+      <div class="info">
+        <h4><a href="<%= url_for werk_url(:name => @rand_picture_01.user.intname, :kunstid => @rand_picture_01.id, :ssid => @ssid, :cp => @cp) %>"><%=h @rand_picture_01.title[0..17].strip -%><% if @rand_picture_01.title.size > 17 -%>...<% end -%></a></h4>
+        <p>
+          Door: 
+          <a href="<%= url_for kunstenaar_url(:name => @rand_picture_01.user.intname) %>">
+            <%=h @rand_picture_01.user.voornaam %> <%=h @rand_picture_01.user.achternaam[0..10].strip %>
+            <% if @rand_picture_01.user.achternaam.size > 10 -%>...<% end -%>
+          </a>
+        </p>
+      </div>
+    </li>
+    <li>
+      <a href="<%= url_for werk_url(:name => @rand_picture_02.user.intname, :kunstid => @rand_picture_02.id, :ssid => @ssid, :cp => @cp) %>">
+        <% if @rand_picture_02.kunstimage -%>
+          <img src="<%= @rand_picture_02.kunstimage.url('square') %>" alt="<%=h @rand_picture_02.title -%>" />
+        <% else %>
+          <img src="<% root_url -%>images/err_im_square.png" alt="<%=h @rand_picture_02.title -%>" />
+        <% end %>
+      </a>
+      <div class="info">
+        <h4><a href="<%= url_for werk_url(:name => @rand_picture_02.user.intname, :kunstid => @rand_picture_02.id, :ssid => @ssid, :cp => @cp) %>"><%=h @rand_picture_02.title[0..17].strip -%><% if @rand_picture_02.title.size > 17 -%>...<% end -%></a></h4>
+        <p>Door: <a href="<%= url_for kunstenaar_url(:name => @rand_picture_02.user.intname) %>"><%=h @rand_picture_02.user.voornaam %> <%=h @rand_picture_02.user.achternaam[0..10].strip %><% if @rand_picture_02.user.achternaam.size > 10 -%>...<% end -%></a></p>
+      </div>
+      </li>
+    </ul>
+</div>
+
+<% if user_signed_in? %>
+  <%= render :partial => 'extra' -%>
+<% end -%>

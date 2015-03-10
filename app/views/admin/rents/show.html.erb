@@ -1,0 +1,85 @@
+
+<h2>Verhurr van "<%=h @rent.kunstvoorwerp.title -%>" </h2>
+<h3>Gerhuurd</h3>
+<ul>
+  <li>Naam: <%= @rent.user.voornaam %> <%= @rent.user.achternaam %></li>
+  <li>Adres: <%= @rent.user.prive_adres %>, <%= @rent.user.prive_postcode %> <%= @rent.user.prive_woonplaats %></li>
+  <li>Tel.: <%= @rent.user.prive_telefoonnummer %></li>
+  <li>Email adres: <%= link_to sanitize(@rent.user.email), 'mailto:' + sanitize(@rent.user.email) %></li>
+</ul>
+
+
+<h3>Verhuurder</h3>
+<ul>
+	<li>Naam: <%= @rent.kunstvoorwerp.user.voornaam %> <%= @rent.kunstvoorwerp.user.achternaam %></li>
+	<li>Adres: <%= @rent.kunstvoorwerp.user.prive_adres %>, <%= @rent.kunstvoorwerp.user.prive_postcode %> <%= @rent.kunstvoorwerp.user.prive_woonplaats %></li>
+	<li>Tel.: <%= @rent.kunstvoorwerp.user.prive_telefoonnummer %></li>
+	<li>Bank nr.: <%= @rent.kunstvoorwerp.user.prive_bankrek %></li>
+	<li>Email adres: <%= link_to sanitize(@rent.kunstvoorwerp.user.email), 'mailto:' + sanitize(@rent.kunstvoorwerp.user.email) %></li>
+</ul>
+
+
+<h3>Verhuur van "<%= @rent.kunstvoorwerp.title -%>"</h3>
+<ul>
+	<li>Titel: "<%= @rent.kunstvoorwerp.title -%>"</li>
+	<% if @rent.prijs != @rent.kunstvoorwerp.prijs %>
+    <li>
+      <strong>Let op!</strong>
+      De prijs tijdens de aankoop kwam niet overeen met de prijs die nu in de database staat.<br />
+      Prijs tijdens aankoop: EUR <%=h @rent.prijs -%><br />
+      Huidige prijs: EUR <%=h @rent.kunstvoorwerp.prijs -%>
+    </li>
+	<% else %>
+	  <li>Prijs: <%= @rent.prijs -%></li>
+	<% end -%>
+	<li>Order Nummer: <%= sanitize(params[:id].to_s) -%></li>
+  <li>
+    Verzendmethode:
+    <% if @rent.kunstvoorwerp.verzendmethode == 0 -%>
+      kan in de brievenbus en dat regel ik zelf
+    <% elsif @rent.kunstvoorwerp.verzendmethode == 1 -%>
+      versturen via pakketpost en dat regel ik zelf
+    <% elsif @rent.kunstvoorwerp.verzendmethode == 2 -%>
+      versturen via de pakketpost en dat regelt Xposers
+    <% elsif @rent.kunstvoorwerp.verzendmethode == 3 -%>
+      kan niet via pakketpost, neem contact met mij op
+    <% end -%>
+  </li>
+</ul>
+
+
+<h3>Wijzig status</h3>
+
+<%= form_for [:admin, @rent] do |form| -%>
+  <select name='rent[status]'>
+    <option value="nieuw"<% if @rent.status == 'nieuw' -%> selected<% end -%>>Nieuw</option>
+    <option value="inbehandeling"<% if @rent.status == 'inbehandeling' -%> selected<% end -%>>In behandeling</option>
+    <option value="verzonden"<% if @rent.status == 'verzonden' -%> selected<% end -%>>Verzonden</option>
+    <option value="afgehandeld" <% if @rent.status == 'afgehandeld' -%> selected<% end -%>>Afgehandeld</option>
+  </select><br />
+  <input type="checkbox" name="rent[delete]"/>Maak verhuur ongedaan<br />
+
+  <% unless @rent.kunstvoorwerp.verkocht %>
+    <input type="checkbox" name="rent[done]"/>Zet object op verkocht<br />
+  <% else -%>
+    <input type="checkbox" name="rent[revert]"/>Zet object op niet verkocht<br />
+  <% end -%>
+
+  <input type="submit" name="submit" value="Verzenden">
+<% end %>
+
+<h3>Stuur bericht</h3>
+
+<%= form_for @rent, url: mailing_admin_rent_path(@rent), method: 'get' do |form| -%>
+  <select name="mail[to]">
+    <option value="k">Koper: <%=h @rent.user.voornaam %> <%=h @rent.user.achternaam %></option>
+    <option value="v">Verkoper: <%=h @rent.kunstvoorwerp.user.voornaam %> <%=h @rent.kunstvoorwerp.user.achternaam %></option>
+  </select>
+  <select name="mail[message]">
+    <% Prefabmail.find(:all).each do |p| -%>
+      <option value="<%=h p.id -%>"><%=h p.title -%></option>
+    <% end -%>
+  </select>
+  <%= form.submit "mail" -%>
+<% end -%>
+

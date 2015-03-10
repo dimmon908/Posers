@@ -1,0 +1,98 @@
+<h2>Aanmelden</h2>
+
+<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |form| %>
+
+  <% if resource.errors.any? %>
+    <div id="error_explanation">
+      <ul>
+      <% @user.errors.messages.each do |field, messages| %>
+        <% next if field.to_s == 'intname' %>
+        <% messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <table id="user-full">
+      <tr class="gray">
+        <td class="label nickname"><%= form.label :nickname, "Gebruikersnaam" %> <span class="red">*</span>:</td>
+        <td><%= form.text_field :nickname, :size => 30, :maxlength => 90, :autocomplete => 'off' -%></td>
+      </tr>
+  	  <tr>
+        <td>&nbsp;</td>
+        <td>
+          De gebruikersnaam is hoofdlettergevoelig en wordt gebruikt om je voor het systeem te identificeren en kent dezelfde 
+          opbouw als bijvoorbeeld een mailadres, enkel letters en cijfers en geen spaties. Deze naam
+          ga je steeds gebruiken wanneer je bij Xposers inlogt.
+        </td>
+  		</tr>
+
+      <tr>
+        <td class="label"><%= form.label :voornaam, "Voornaam" %> <span class="red">*</span>:</td>
+        <td><%= form.text_field :voornaam, :size => 30, :maxlength => 200, :autocomplete => 'off' -%></td>
+      </tr>
+
+      <tr>
+        <td class="label"><%= form.label :tussenvoegsel, "Tussenvoegsel" %>:</td>
+        <td><%= form.text_field :tussenvoegsel, :size => 30, :maxlength => 200, :autocomplete => 'off' -%></td>
+      </tr>
+
+      <tr>
+        <td class="label"><%= form.label :achternaam, "Achternaam" %> <span class="red">*</span>:</td>
+        <td><%= form.text_field :achternaam, :size => 30, :maxlength => 200, :autocomplete => 'off' -%></td>
+      </tr>
+
+      <tr>
+        <td class="label"><%= form.label :email, "E-mail adres" %> <span class="red">*</span>:</td>
+        <td><%= form.text_field :email, :size => 30, :maxlength => 200, :autocomplete => 'off' -%></td>
+      </tr>
+
+      <tr class="gray">
+        <td class="label"><%= form.label :email_confirmation, "E-mail adres ter bevestiging" %> <span class="red">*</span>:</td>
+        <td><%= form.text_field :email_confirmation, :size => 30, :maxlength => 200, :autocomplete => 'off' -%></td>
+      </tr>
+
+      <tr>
+        <td class="label"><%= form.label :password, "Wachtwoord" %> <span class="red">*</span>:</td>
+        <td>
+          <%= form.password_field :password, :size => 30, :maxlength => 40, :onkeyup => "runPassword(this.value, 'mypassword');" -%>
+          	<div style="width: 100px; float: right;">
+  				<div id="mypassword_text" style="font-size: 11px;"></div>
+  				<div id="mypassword_bar" style="font-size: 1px; height: 2px; width: 0px; border: 1px solid white;"></div>
+  			</div>
+        </td>
+      </tr>
+
+      <tr class="gray">
+        <td class="label"><%= form.label :password_confirmation, "Wachtwoord ter bevestiging"%> <span class="red">*</span>:</td>
+        <td>
+          <%= form.password_field :password_confirmation, :size => 30, :maxlength => 40 -%>
+        </td>
+      </tr>
+
+      <tr>
+        <td></td>
+        <td>
+          <%= form.check_box(:eula, { :class => 'eula_check' }, "yes", "no") %>
+          Ik accepteer de 
+          <a onclick="window.open(this.href,'','resizable=yes,location=no,menubar=no,scrollbars=yes,status=no,toolbar=no,fullscreen=no,dependent=no,status'); return false" href="http://www.xposers.nl/pagina/21">algemene voorwaarden</a>.
+        </td>
+      </tr>
+
+      <tr>
+        <td></td>
+        <td><%= show_simple_captcha(:object => "user") %></td>
+      </tr>
+
+      <tr class="noborder">
+        <td class="label">&nbsp;</td>
+        <td>
+          <%= form.submit " Aanmelden >>", :class => "submit" -%>
+        </td>
+      </tr>
+
+  </table>
+<% end %>
+

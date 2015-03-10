@@ -1,0 +1,108 @@
+<div class="wide">
+  <div class="h"></div>
+
+    <div class="c">
+      <h2><%=h complete_username(@kunstenaar) %></h2>
+
+      <% if @me.isrole('kunstenaar') and @me.id == @kunstenaar.id -%>
+        <p><%= link_to 'Wijzigen', profile_url -%></p>
+      <% end %>
+
+      <% if !@kunstenaar.avatar.blank? -%>
+        <%= image_tag(@kunstenaar.avatar.url, :class => 'k-avatar') -%>
+      <% end -%>
+
+      <% if !@kunstenaar.profile_geboorteplaats.blank? -%>
+      <p>
+        <%=h @kunstenaar.profile_geboorteplaats %><%=h ", #{@kunstenaar.profile_geboortedatum}" if !@kunstenaar.profile_geboortedatum.blank? %>
+      </p>
+      <% end %>
+      
+      <% if !@kunstenaar.profile_description.blank? -%>
+      <p><%=h @kunstenaar.profile_description.strip -%></p>
+      <% end -%>
+
+      <% if !@opleidingen.blank? -%>
+      <h3>Opleiding<% if @opleidingen.size > 1 -%>en<% end -%></h3>
+      <ul>
+        <% @opleidingen.each do |o| -%>
+        <li><%=h o -%></li>
+        <% end -%>
+      </ul>
+      <% end -%>
+      <% if !@disciplines.blank? -%>
+      <h3>Discipline<% if @disciplines.size > 1 -%>s<% end -%></h3>
+      <ul>
+        <% @disciplines.each do |disc| -%>
+        <li><%=h disc -%></li>
+        <% end -%>
+      </ul>
+      <% end -%>
+      <% if !@pcv.blank? -%>
+      <h3>CV</h3>
+      <ul>
+        <% @pcv.each do |cv| -%>
+        <li><%=h cv -%></li>
+        <% end -%>
+      </ul>
+      <% end -%>
+      <% if !@pexpo.blank? -%>
+      <h3>Exposities</h3>
+      <ul>
+        <% @pexpo.each do |expo| -%>
+        <li><%=h expo -%></li>
+        <% end -%>
+      </ul>
+      <% end -%>
+      <% if !@pawards.blank? -%>
+      <h3>Prijzen en awards</h3>
+      <ul>
+        <% @pawards.each do |award| -%>
+        <li><%=h award -%></li>
+        <% end -%>
+      </ul>
+      <% end -%>
+      <% if !@kunstenaar.profile_website.blank? and (@kunstenaar.profile_website[0..6] == 'http://' or @kunstenaar.profile_website[0..3] == 'www') -%>
+      <h3>Website</h3>
+      <% if @kunstenaar.profile_website[0..6] == 'http://' -%>
+      <%= link_to sanitize(@kunstenaar.profile_website), sanitize(@kunstenaar.profile_website), {:popup => true }-%>
+      <% else -%>
+      <%= link_to 'http://' + sanitize(@kunstenaar.profile_website), 'http://' + sanitize(@kunstenaar.profile_website),  :popup => true -%>
+      <% end -%>
+      <% end -%>
+    </div>
+  <div class="s"></div>
+  </div>
+  <div class="wide">
+  <div class="h"></div>
+
+  <div class="c">
+    <h2>Werk van <%=h complete_username(@kunstenaar) %></h2>
+    <ul id="sresults">
+      <% @kvs.each do |kv| %>
+      <li>
+        <% if kv.kunstimage %>
+          <a href="<%= url_for werk_url(:name => kv.user.intname, :kunstid => kv.id) %>">
+            <img src="<%= kv.kunstimage.url('square') %>" />
+          </a>
+        <% end %>
+        <div class="info">
+          <h4><a href="<%= url_for werk_url(:name => kv.user.intname, :kunstid => kv.id, :ssid => @ssid, :cp => @cp) %>"><%=h kv.title.strip[0..17] -%><% if kv.title.size > 17 -%>...<% end -%></a></h4>
+        <span class="waarderingen"><%= kv.appcount %> waardering<% if kv.appcount != 1 %>en<% end -%></span>
+        </div>
+      </li>
+      <% end %>
+    </ul>
+    <% if @pagecount > 1 -%>
+    <p class="pagination-search">
+    <% i = 0 %>
+    <% while i < @pagecount do %>
+    <%=link_to (i + 1).to_s, kunstenaar_url(:name => @kunstenaar.intname, :page => i) %> 
+    <% i = i + 1 %>
+    <% end %>
+    <p/>
+    <% end %>
+    <br style="clear: both;" />
+  </div>
+  <div class="s"></div>
+</div>

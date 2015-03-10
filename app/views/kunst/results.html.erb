@@ -1,0 +1,39 @@
+<h2>Zoekresultaten</h2>
+
+<% if @kvs.blank? %>
+  <p>Er zijn geen resultaten voor je zoekopdracht gevonden. Ga naar de <a href="javascript:history.go(-1);">vorige pagina</a> en pas de zoekopdracht aan.</p>
+<% else -%>
+
+  <% if params[:q] and !params[:q].blank?%>
+    <p>Je hebt gezocht op <strong><%=h params[:q]%></strong> (<%=h @voorwerpen %>)</p>
+  <% end %>
+
+  <ul id="sresults">
+    <% @kvs.each do |kv| %>
+      <li>
+        <a href="<%= werk_url(:name => kv.user.intname, :kunstid => kv.id, :ssid => @ssid, :cp => @cp) %>">
+          <img src="<%= kv.kunstimage.url('square') %>" alt="<%=h kv.title -%>" />
+        </a>
+        <div class="info">
+          <h4>
+            <% title = h kv.title[0..19].strip %>
+            <% title += " ..." if kv.title.size > 19 %>
+            <%= link_to title, werk_url(:name => kv.user.intname, :kunstid => kv.id, :ssid => @ssid, :cp => @cp) %> 
+          </h4>
+          <p>Door: 
+            <a href="<%= kunstenaar_url(:name => kv.user.intname) %>">
+              <%= kv.user.full_name[0..22].strip %> <%= "..." if kv.user.full_name.size > 22 %>
+            </a>
+          </p>
+          <span class="waarderingen">
+            <%= kv.appcount %> waardering<% if kv.appcount != 1 %>en<% end -%>
+          </span>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+
+  <%= will_paginate @kvs, :params => { :ssid => @ssid }, :inner_window => 7, :outer_window => 3 %>
+<% end -%>
+
+<br style="clear: both;" />

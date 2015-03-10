@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title><% if @title -%><%=h @title -%> - xposers<% else %>xposers - Laat zien wat je maakt<% end -%>   </title>
+    <link rel="icon" type="image/png" href="<%= root_url -%>favicon.png">
+
+    <%= render :partial => 'layouts/meta' -%>
+
+    <%= stylesheet_link_tag "default" -%>
+    <%= stylesheet_link_tag "search" -%><%= stylesheet_link_tag "forum" -%>
+    <%= stylesheet_link_tag "kunst" -%>
+
+    <%= javascript_include_tag('jquery.js') %>
+    <%= javascript_include_tag('interface.js') %>
+    <%= javascript_include_tag('application.js') %>
+  </head>
+<body>
+  <div id="wrapper">
+    <%= render :partial => 'layouts/header'  %>
+    <div id="left">
+      <%= render :partial => 'layouts/menu'  %>
+      <%= render :partial => 'layouts/search'  %>
+
+      <div class="adsense-loader" style="display:block;">
+        <script type="text/javascript">
+          <!--
+          google_ad_client = "ca-pub-9030540237247234";
+          /* 250x250, gemaakt 8-5-11 */
+          google_ad_slot = "5735687854";
+          google_ad_width = 250;
+          google_ad_height = 450;
+          //-->
+        </script>
+        <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+      </div>
+
+      <div class="adsense-loader" style="display:block;">
+        <script type="text/javascript">
+          <!--
+          google_ad_client = "ca-pub-9030540237247234";
+          /* 250x250, gemaakt 8-5-11 */
+          google_ad_slot = "5735687854";
+          google_ad_width = 250;
+          google_ad_height = 450;
+          //-->
+        </script>
+        <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+      </div>
+    </div>
+    <div id="right">
+      <%= render :partial => 'layouts/flash', :locals => { :flash => flash }  %>
+      <div class="wide">
+        <div class="h"></div>
+        <div class="c"><%= yield %></div>
+        <div class="s"></div>	
+      </div>
+      <ul id="disclaimer">
+        <li><a href="<%= disclaimer_url %>">disclaimer</a></li> 
+        <li>&copy; <%= Time.now.strftime('%Y') -%> xposers</li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

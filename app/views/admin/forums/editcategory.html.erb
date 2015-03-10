@@ -1,0 +1,5 @@
+<h2>Edit <%=h @category.title%></h2>
+<%= form_for(:category) do |f| -%>
+<%= f.text_field :title -%>
+<%= f.submit 'edit' -%>
+<% end -%>

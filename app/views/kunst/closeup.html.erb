@@ -1,0 +1,26 @@
+<h2><%=h @kv.title %></h2>
+
+<%
+url = ''
+if params[:cp] and params[:ssid]
+	url = url_for werk_url(:name => @kv.user.intname, :kunstid => @kv.id, :ssid => params[:ssid], :cp => params[:cp])
+elsif params[:ssid]
+	url = url_for werk_url(:name => @kv.user.intname, :kunstid => @kv.id, :ssid => params[:ssid])
+else
+	url = url_for werk_url(:name => @kv.user.intname, :kunstid => @kv.id)
+end
+%>
+
+<ul class="knav">
+	<li><%= link_to 'info', werk_url(:name => @kv.user.intname, :kunstid => @kv.id) -%></li>
+	<li>close up</li>
+	<li class="noborder"><%= link_to 'beschrijving', werkext_url(:name => @kv.user.intname, :kunstid => @kv.id, :page => 'beschrijving') -%></li>
+</ul>
+
+<%= link_to image_tag(@kv.closeup.url, width: '800'), url %> 
+
+<% if current_user %>
+  <% if @kv.user_id == current_user.id %>
+  <%= button_to "Verwijderen", closeup_path(@kv), method: :delete %>
+  <% end %>
+<% end %>

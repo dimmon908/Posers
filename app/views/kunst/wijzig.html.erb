@@ -1,0 +1,114 @@
+<h2>Wijzig <%=h @kunst.title -%></h2>
+<p>Om een voorwerp op xposers.nl te plaatsen vul je hieronder de gegevens van je voorwerp in. Na het invullen volgt een formulier om een afbeelding te plaatsen. Objecten zonder afbeelding verschijnen niet op de website, dus zorg dat je een passende foto plaatst.</p>
+<%= error_messages_for "kunst", :header_message => "Fouten opgetreden tijdens aanmaken kunstvoorwerp", :message => "De volgende fouten speelden op:" %>
+<%= form_for :kunst do |form| %>
+<table id="user-full">
+    <tr class="gray">
+      <td class="label"><span class="red">*</span> Titel:</td>
+      <td><%= form.text_field :title, :size => 30, :maxlength => 90 -%></td>
+    </tr>
+    <tr class="gray">
+      <td class="label"><span class="red">*</span> Omschrijving:</td>
+      <td><%= form.text_area :description, :rows => 8, :cols => 50 -%></td>
+    </tr>
+    <tr class="gray">
+      <td class="label">Trefwoorden:</td>
+      <td><%= form.text_area :tags, :rows => 3, :cols => 50 -%><br />Voeg hier woorden trefwoorden toe om er voor te zorgen dat je kunstvoorwerp gemakkelijk te vinden is met het zoeken. Scheid de trefwoorden met spaties.</td>
+    </tr>
+    <tr class="gray">
+      <td class="label">Materiaal:</td>
+      <td><%= form.text_area :material, :rows => 3, :cols => 50 -%></td>
+    </tr>
+    <tr class="gray">
+      <td class="label"><span class="red">*</span> Prijs:</td>
+      <td><%= form.text_field :prijs, :size => 10, :maxlength => 20 -%> euro</td>
+    </tr>
+    <tr>
+      <td class="label">Beschikbaar voor verhuur</td>
+      <td><%= form.check_box :for_rent %></td>
+    </tr>
+    <tr class="gray">
+      <td class="label"></td>
+      <td><select name="kunst[status]">
+		<option value="0"<% if @kunst.status == 0 -%> selected="selected"<% end -%>>Te Koop</option>
+		<option value="1"<% if @kunst.status == 1 -%> selected="selected"<% end -%>>Gereserveerd</option>
+		<option value="2"<% if @kunst.status == 2 -%> selected="selected"<% end -%>>Verkocht</option>
+	</select>
+		</td>
+    </tr>
+  <tr class="gray">
+      <td class="label">Verzendmethode</td>
+      <td><select name="kunst[verzendmethode]">
+		<option value="0"<% if @kunst.verzendmethode == 0 -%> selected="selected"<% end -%>>1) kan in de brievenbus en dat regel ik zelf</option>
+		<option value="1"<% if @kunst.verzendmethode == 1 -%> selected="selected"<% end -%>>2) versturen via pakketpost en dat regel ik zelf</option>
+		<option value="2"<% if @kunst.verzendmethode == 2 -%> selected="selected"<% end -%>>3) versturen via de pakketpost en dat regelt Xposers</option>
+		<option value="3"<% if @kunst.verzendmethode == 3 -%> selected="selected"<% end -%>>4) kan niet via pakketpost, neem contact met mij op</option>
+	</select>
+		</td>
+    </tr>
+	<tr>
+		<td class="label">&nbsp;</td>
+		<td>
+		De commissie die je afdraagt is afhankelijk van hoeveel je zelf doet aan het transport van het werk.
+		<ol>
+		<li>regel je zelf per briefpost: 20%</li>
+		<li>regel je zelf per pakketpost: 20%</li>
+		<li>regelt Xposers per pakketpost: 25%</li>
+		<li>regelt Xposers per speciaal transport: 30%</li>
+		</ol>
+	</td>
+	</tr>
+
+
+
+
+    <tr class="gray">
+      <td class="label"><span class="red">*</span> Hoogte:</td>
+      <td><%= form.text_field :height, :size => 10, :maxlength => 20 -%> cm</td>
+    </tr>
+    <tr class="gray">
+      <td class="label"><span class="red">*</span> Breedte:</td>
+      <td><%= form.text_field :width, :size => 10, :maxlength => 20 -%> cm</td>
+    </tr>
+    <tr class="gray">
+      <td class="label">Diepte:</td>
+      <td><%= form.text_field :depth, :size => 10, :maxlength => 20 -%> cm</td>
+    </tr>
+    <tr class="gray">
+      <td class="label"><span class="red">*</span> Type werk:</td>
+      <td>
+           <select name="kunst[type]" id="newbar" onchange="newselect()">
+             <option value="0">Maak een keuze</option>
+            <% @type.each do |t| -%><option value="<%= t.id -%>"<% if t.id == @kunst.type_id -%>selected="selected"<% end -%>><%= t.title -%></option><% end -%>
+          </select>
+      </td>
+    </tr>
+  <% @type.each do |t| %>
+<% t.propertycontainers.each do |c| -%>
+<% if !c.kunstproperties.blank? %>
+<tr class="sb2 tn<%= t.id -%>">
+  <td class="label"><span class="red">*</span> <%= c.title -%></td>
+  <td>
+	<select name="properties[c<%= c.id.to_s -%>]">
+		<% c.kunstproperties.each do |p| %>
+			<option value="<%=h p.id -%>"<% if @kop.include?(p.id) %> selected="selected"<% end -%>><%=h p.title%></option>
+		<% end -%>
+	</select>
+  </td>
+</tr>
+<% end -%>
+<% end -%>
+  <% end %>
+	<tr>
+		<td class="label">Hou mij op de hoogte van reacties</td>
+		<td><%= form.check_box :houmeopdehoogte -%></td>
+	</tr>
+    <tr class="noborder">
+      <td class="label">&nbsp;</td>
+      <td>
+     <%= submit_tag " Wijzig", :class => "submit", :id => 'nbutton', :disabled => true -%>
+      </td>
+    </tr>
+</table>
+<% end %>
+<p>De met <span class="red">*</span> gemarkeerde velden zijn verplicht</p>

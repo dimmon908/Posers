@@ -1,0 +1,6 @@
+<h2>Interne mails</h2>
+<ul>
+<% @ims.each do |p| -%>	
+	<li><%= p.title %> (<%= link_to 'wijzig', :action => 'editintmail', :id => p.id -%>)</li>
+<% end -%>
+</ul>

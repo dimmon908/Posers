@@ -1,0 +1,6 @@
+Weet je zeker dat je dit interieur wilt verwijderen?
+<%= form_for :interieur do |form| -%>
+   <%= error_messages_for "interieur" %>
+		<%= submit_tag "Ja, verwijder het", :class => "submit" -%>
+        <%= form.hidden_field(:id, :value => params[:id]) %>
+<% end -%>

@@ -1,0 +1,6 @@
+<%= error_messages_for "kunst", :header_message => "Fouten opgetreden tijdens reageren", :message => "De volgende fouten speelden op:" %>
+<h3>Verwijder <%=h @kunst.title -%></h3>
+<p>Weet je zeker dat je dit voorwerp wilt verwijderen? Hierna is het voorwerp niet meer terug te halen.</p>
+<%= form_for :kunst do |form| -%>
+<%= form.submit 'Verwijderen' -%>
+<% end %>

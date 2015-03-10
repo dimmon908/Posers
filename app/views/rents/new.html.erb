@@ -1,0 +1,9 @@
+<h1><%= @page.title %></h1>
+
+<% artwork_url = werk_url(name: @artwork.user.intname, kunstid: @artwork) %>
+<%= @page.content.sub('&lt;link to artwork&gt;', link_to(artwork_url, artwork_url)).html_safe %>
+
+<div class="prices rent">
+  <%= button_to "", artwork_rents_path %>
+</div>
+

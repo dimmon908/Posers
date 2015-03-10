@@ -1,0 +1,35 @@
+<ul id="forumhead">
+  <li class="top">
+    <ul>
+      <li class="tinfo"><%= link_to 'Forum', viewforumindex_url %> > <%= link_to sanitize(@forum.title), viewforum_url(:id => @forum.id) %> > <%= h @topic.title[0..60] -%><% if @topic.title.size > 60 -%>..<% end -%></li>
+    </ul>
+  </li>
+  <li class="bottom">
+    <ul>
+      <%= render :partial => "forum/menu" -%>
+    </ul>
+  </li>
+</ul>
+<%= form_for :topic do |form| -%>
+<ul id="quickreply">
+<li class="top"><span class="le">Verwijder een bericht uit "<%=h @topic.title -%>"</span></li>
+<li class="bottom">
+	<table id="forum_topic" style="margin-left: 8px;">
+	<tr>
+	<td><p style="border: 1px solid #999; background-color: #EFEFEF; width: 460px; padding: 4px; margin: 4px;"><%= @message.processed -%></p></td>
+	<tr>
+		<td colspan="1">&nbsp;</td>
+		</tr>
+	</tr>
+	  <tr class="gray">
+	    <td>Na het verwijderen van dit bericht is deze niet meer terug te halen.</td>
+	  </tr>
+    <tr class="noborder">
+      <td>
+     <%= submit_tag "Verwijderen", :class => "submit" -%>
+      </td>
+    </tr>
+	</table>
+</li>
+</ul>
+<% end -%>

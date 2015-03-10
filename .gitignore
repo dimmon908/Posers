@@ -1,0 +1,15 @@
+.bundle
+db/*.sqlite3
+log/*.log
+tmp/
+.sass-cache/
+.DS_Store
+.rvmrc
+.idea
+public/webimages/*
+public/interieurs/*
+public/itemimages/*
+public/closeups/*
+public/avatars/*
+config/database.yml
+*.swp

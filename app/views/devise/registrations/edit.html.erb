@@ -1,0 +1,43 @@
+<h2>Wijzig mijn wachtwoord</h2>
+<%= render 'gebruiker/menu' %>
+
+<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
+  <% if resource.errors.any? %>
+    <div id="error_explanation">
+      <ul>
+      <% @user.errors.messages.each do |field, messages| %>
+        <% messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <table id="user-full">
+    <tr class="gray">
+      <td class="label">Huidige wachtwoord:</td>
+      <td>
+        <%= f.password_field :current_password, :size => 30, :maxlength => 40 -%>
+      </td>
+    </tr>
+    <tr>
+      <td class="label">Nieuw wachtwoord:</td>
+      <td>
+        <%= f.password_field :password, :size => 30, :maxlength => 40 -%>
+      </td>
+    </tr>
+    <tr class="gray">
+      <td class="label">Bevestig nieuw wachtwoord:</td>
+      <td>
+        <%= f.password_field :password_confirmation, :size => 30, :maxlength => 40 -%>
+      </td>
+    </tr>
+    <tr class="noborder">
+      <td class="label">&nbsp;</td>
+      <td>
+     <%= submit_tag " Wijzigen", :class => "submit" -%>
+      </td>
+    </tr>
+  </table>
+<% end %>

@@ -1,0 +1,14 @@
+	<%= error_messages_for "reactie", :header_message => "Fouten opgetreden tijdens reageren", :message => "De volgende fouten speelden op:" %>
+	<h3>Wijzig je commentaar op <%=h @reactie.kunstvoorwerp.title -%></h3>
+	<%= form_for :reply do |form| -%>
+	<%= form.text_area :raw, :rows => 5, :value => @reactie.raw -%><br />
+	<%= form.submit 'Wijzigen' -%>
+	
+	
+	<% if @me.can('admin') -%>
+	<div style="margin-top: 10px;">
+	<h3><input type="checkbox" name="modtextenabled" />Stuur auteur bericht</h3>
+	<textarea name="modtext" cols="80" rows="12"></textarea>
+	</div>
+	<% end -%>
+	<% end -%>

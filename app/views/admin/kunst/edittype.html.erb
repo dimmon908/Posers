@@ -1,0 +1,6 @@
+<h2>Wijzig type</h2>
+<%= form_for @type, :url => admin_kunst_edittype_path(@type.id) do |f| %>
+Titel: <%= f.text_field :title -%><br />
+2D <input type="radio" name="type[dimensie]" <% if @type.dimensie == 2 -%>checked="checked"<% end %> value="2"> 3D <input type="radio" name="type[dimensie]" <% if @type.dimensie != 2 -%>checked="checked"<% end %> value="3"><br />
+<%= f.submit %>
+<% end %>

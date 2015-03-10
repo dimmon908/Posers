@@ -1,0 +1,25 @@
+<h2>Wijzig afbeelding</h2>
+<%= render :partial => 'menu' -%>
+
+<div id="avatars">
+  <ul>
+    <% @me.avatars.each do |a| %>
+    <li<% if a.selected_avatar %> class="default"<% end %>>
+      <% if !a.selected_avatar %>
+        <a href="<%= url_for :action => 'setdefaultavatar', :id => a.id -%>">
+      <% end %>
+        <%= image_tag a.url %>
+      <% if !a.selected_avatar %>
+        </a>
+      <% end %>
+      <div class="editavatar">
+        <% if !a.selected_avatar %>
+          <%= link_to 'Standaard afbeelding', :action => 'setdefaultavatar', :id => a.id -%>
+        <% end %> 
+        <%= link_to 'Verwijder afbeelding', {:action => 'deleteavatar', :id => a.id},  {:confirm => 'Weet je zeker dat je deze afbeelding wilt verwijderen?', :method => :delete} -%>
+      </div>
+    </li>
+    <% end %>
+  </ul>
+  <p><%= link_to 'Upload nieuwe afbeelding', :action => 'uploadavatar' %></p>
+</div>

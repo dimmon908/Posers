@@ -1,0 +1,4 @@
+<h2><%=h @user.nickname -%></h2>
+<% if !@user.avatar.blank?  %>
+               <%= image_tag(@user.avatar.url) -%>
+               <% end %>

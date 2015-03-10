@@ -1,0 +1,57 @@
+<h2>Aanmelden</h2>
+
+<%= error_messages_for "user", :header_message => "Fouten opgetreden tijdens aanmelden", :message => "De volgende fouten speelden op:" %>
+<%= form_for :user, :url => register_url do |form| %>
+<table id="user-full">
+    <tr class="gray">
+      <td class="label">Gebruikersnaam:</td>
+      <td><%= form.text_field :nickname, :size => 30, :maxlength => 90 -%>
+	</td>
+    </tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td>De gebruikersnaam wordt gebruikt om je voor het systeem te identificeren en kent dezelfde opbouw als bijvoorbeeld een mailadres, enkel letters en cijfers en geen spaties. Deze naam ga je steeds gebruiken wanneer je bij Xposers inlogt. </td>
+		</tr>
+    <tr>
+      <td class="label">E-mail adres:</td>
+      <td><%= form.text_field :email, :size => 30, :maxlength => 200 -%></td>
+    </tr>
+     <tr class="gray">
+      <td class="label">E-mail adres ter bevestiging:</td>
+      <td><%= form.text_field :emailconf, :size => 30, :maxlength => 200, :value => @emailconf -%></td>
+    </tr>
+    <tr>
+      <td class="label">Wachtwoord:</td>
+      <td>
+        <%= form.password_field :password, :size => 30, :maxlength => 40, :onkeyup => "runPassword(this.value, 'mypassword');" -%>
+        	<div style="width: 100px; float: right;">
+				<div id="mypassword_text" style="font-size: 11px;"></div>
+				<div id="mypassword_bar" style="font-size: 1px; height: 2px; width: 0px; border: 1px solid white;"></div>
+			</div>
+      </td>
+    </tr>
+    <tr class="gray">
+      <td class="label">Wachtwoord ter bevestiging</td>
+      <td>
+        <%= form.password_field :passwordconf, :size => 30, :maxlength => 40, :value => @passwordconf -%>
+      </td>
+    </tr>
+    <tr>
+      <td class="label">20 + 8 = ? (Veiligheidsvraag)</td>
+      <td> <%= form.text_field :secquest, :size => 15, :maxlength => 10, :value => @secqent -%></td>
+    </tr>
+    <tr>
+      <td>
+      </td>
+      <td>
+        <%=   check_box("eula", "accepted", { :class => 'eula_check' }, "yes", "no") %> Ik accepteer de <a href="http://www.xposers.nl/pagina/21">algemene voorwaarden</a>.
+      </td>
+    </tr>
+    <tr class="noborder">
+      <td class="label">&nbsp;</td>
+      <td>
+     <%= submit_tag " Aanmelden >>", :class => "submit" -%>
+      </td>
+    </tr>
+</table>
+<% end %>

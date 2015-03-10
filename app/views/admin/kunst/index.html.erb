@@ -1,0 +1,29 @@
+<ul id="cmenu">
+	<li style="border-bottom: 1px solid #9e9e9e;"><%= link_to 'Types', :action => 'index' -%></li>
+	<% @types.each do |t| %>
+	<li><%= link_to sanitize(t.title), :action => 'show', :id => t.id -%></li>
+	<% end -%>
+</ul>
+<div class="r">
+<h2>Kunst</h2>
+<p>Stel hier de types in voor de kunst</p>
+<h4>2D:</h3>
+<ul>
+	<% @tweedee.each do |t| %>
+	<li><%=h t.title -%> (<%= link_to 'wijzigen', :action => 'edittype', :id => t.id -%> / <%= link_to 'verwijderen', {:action => 'deletetype', :id => t.id}, {:confirm => 'Zeker weten?', :method => :delete} %>)</li>
+	<% end -%>
+</ul>
+<h4>3D:</h3>
+<ul>
+	<% @driedee.each do |t| %>
+	<li><%=h t.title -%> (<%= link_to 'wijzigen', :action => 'edittype', :id => t.id -%> / <%= link_to 'verwijderen', {:action => 'deletetype', :id => t.id}, {:confirm => 'Zeker weten?', :method => :delete} %>)</li>
+	<% end -%>
+</ul>
+
+<h3>Nieuw type</h3>
+<%= form_for :type do |f| %>
+Titel: <%= f.text_field :title, :value => '' -%><br />
+2D <input type="radio" name="type[dimensie]" checked="checked" value="2"> 3D <input type="radio" name="type[dimensie]" value="3"><br />
+<%= f.submit %>
+<% end %>		
+</div>
